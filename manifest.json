@@ -1,0 +1,26 @@
+{
+  "name": "La Puerta Abierta — Biblia Católica",
+  "short_name": "La Puerta Abierta",
+  "description": "Versículos, meditación diaria, año litúrgico, oraciones, santos y salmos de la tradición católica.",
+  "start_url": "./index.html",
+  "scope": "./",
+  "display": "standalone",
+  "orientation": "portrait",
+  "background_color": "#0a0800",
+  "theme_color": "#0a0800",
+  "lang": "es",
+  "icons": [
+    {
+      "src": "assets/icons/icon-192.png",
+      "sizes": "192x192",
+      "type": "image/png",
+      "purpose": "any"
+    },
+    {
+      "src": "assets/icons/icon-512.png",
+      "sizes": "512x512",
+      "type": "image/png",
+      "purpose": "any"
+    }
+  ]
+}
