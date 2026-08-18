@@ -114,6 +114,44 @@ button{font:inherit;-webkit-tap-highlight-color:transparent;-webkit-user-select:
 .subsec-title{font-family:var(--font-title);font-size:17px;font-weight:600;color:var(--gold2);letter-spacing:1.5px;margin:34px 0 4px;text-transform:uppercase;}
 .subsec-desc{color:var(--text2);font-size:15px;font-style:italic;margin-bottom:18px;}
 
+.hoy-liturgico{--hoy-color:#4a7a4a;position:relative;border-radius:var(--radius);border:1px solid var(--border2);background:linear-gradient(160deg,rgba(255,255,255,.05),transparent 60%),var(--surface);box-shadow:0 1px 3px rgba(0,0,0,.4),0 6px 16px rgba(0,0,0,.22);padding:22px 22px 20px;margin-bottom:6px;overflow:hidden;}
+.hoy-liturgico::before{content:'';position:absolute;top:0;left:0;width:4px;height:100%;background:var(--hoy-color);}
+.hoy-fecha{font-family:var(--font-title);font-size:14px;letter-spacing:2px;text-transform:uppercase;color:var(--text2);margin-bottom:10px;}
+.hoy-tiempo{display:flex;align-items:center;gap:10px;font-family:var(--font-title);font-size:24px;font-weight:600;color:var(--gold3);letter-spacing:.5px;margin-bottom:8px;}
+.hoy-dot{width:13px;height:13px;border-radius:50%;flex-shrink:0;box-shadow:0 0 10px var(--hoy-color);}
+.hoy-colorlit{font-size:15px;color:var(--text2);font-style:italic;margin-bottom:14px;}
+.hoy-ciclos{font-size:14px;color:var(--text3);letter-spacing:.5px;margin-bottom:18px;}
+.hoy-ciclos strong{color:var(--gold);font-weight:600;}
+.hoy-cta{display:inline-flex;align-items:center;gap:6px;padding:10px 20px;border-radius:999px;border:1px solid var(--gold);background:var(--gold-dim);color:var(--gold2);font-family:var(--font-title);font-size:12.5px;letter-spacing:1px;text-transform:uppercase;text-decoration:none;transition:background .15s,transform .12s;}
+.hoy-cta:hover{background:rgba(201,168,76,.22);}
+.hoy-cta:active{transform:scale(.96);}
+.hoy-explicacion{font-size:15.5px;color:var(--text3);font-style:italic;line-height:1.6;margin:14px 2px 0;}
+
+/* ===== Puertas de lectura ("Cómo abrir la Palabra") ===== */
+.puertas-lectura{margin-top:4px;}
+.puerta-paso{position:relative;display:flex;gap:14px;padding-bottom:20px;}
+.puerta-paso:last-child{padding-bottom:0;}
+.puerta-paso:not(:last-child)::before{content:'';position:absolute;left:19px;top:40px;bottom:0;width:1px;background:linear-gradient(var(--border2),var(--border));}
+.puerta-marca{flex:0 0 auto;width:38px;height:38px;border-radius:50%;background:var(--surface2);border:1px solid var(--gold-dim);display:flex;align-items:center;justify-content:center;position:relative;z-index:1;}
+.puerta-num{font-family:var(--font-title);font-size:14px;font-weight:600;color:var(--gold);letter-spacing:.5px;}
+.puerta{flex:1;min-width:0;position:relative;border-radius:26px 26px 10px 10px;overflow:hidden;border:1px solid var(--border);box-shadow:0 1px 3px rgba(0,0,0,.4),0 6px 16px rgba(0,0,0,.22);perspective:1200px;}
+.puerta-contenido{position:relative;z-index:1;padding:24px 22px;min-height:118px;display:flex;flex-direction:column;justify-content:center;background:linear-gradient(160deg,var(--surface2),var(--surface));cursor:pointer;-webkit-tap-highlight-color:transparent;}
+.puerta-contenido:focus-visible{outline:2px solid var(--gold);outline-offset:-2px;}
+.puerta-contenido p{font-size:15.5px;color:var(--text2);line-height:1.6;margin:0;}
+.puerta-luz{position:absolute;inset:0;z-index:2;background:radial-gradient(circle at 0% 50%,rgba(201,168,76,.55),transparent 70%);opacity:0;transition:opacity .7s ease .2s;pointer-events:none;mix-blend-mode:screen;}
+.puerta.abierta .puerta-luz{opacity:1;}
+.puerta-hoja{position:absolute;inset:0;z-index:3;width:100%;height:100%;background:linear-gradient(160deg,#241c0c,#150f05);border:none;border-right:2px solid var(--gold-dim);cursor:pointer;display:flex;align-items:center;justify-content:center;padding:0 20px;text-align:center;backface-visibility:hidden;-webkit-backface-visibility:hidden;transform-origin:left center;transition:transform .65s cubic-bezier(.34,1.15,.4,1);-webkit-tap-highlight-color:transparent;}
+.puerta-hoja::before{content:'';position:absolute;inset:8px;border:1px solid rgba(201,168,76,.18);border-radius:20px 20px 6px 6px;pointer-events:none;}
+.puerta-titulo{font-family:var(--font-title);font-size:16px;font-weight:600;color:var(--gold3);letter-spacing:.3px;line-height:1.35;}
+.puerta-pomo{position:absolute;right:16px;top:50%;transform:translateY(-50%);width:8px;height:8px;border-radius:50%;background:var(--gold);box-shadow:0 0 6px rgba(201,168,76,.6);}
+.puerta.abierta .puerta-hoja{transform:rotateY(-100deg);}
+.puerta:hover .puerta-hoja:not(.puerta.abierta .puerta-hoja){box-shadow:inset 0 0 30px rgba(201,168,76,.08);}
+@media (prefers-reduced-motion: reduce){
+  .puerta-hoja{transition:opacity .25s ease;}
+  .puerta.abierta .puerta-hoja{transform:none;opacity:0;pointer-events:none;}
+  .puerta-luz{transition:opacity .25s ease;}
+}
+
 .santos-galeria{display:grid;grid-template-columns:1fr;gap:16px;margin-bottom:8px;}
 .santo-flip{perspective:1400px;aspect-ratio:4/5;max-width:360px;margin:0 auto;width:100%;cursor:pointer;-webkit-tap-highlight-color:transparent;}
 .santo-flip-inner{position:relative;width:100%;height:100%;transform-style:preserve-3d;transition:transform .5s cubic-bezier(.4,0,.2,1);}

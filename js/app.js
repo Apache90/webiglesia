@@ -3,6 +3,110 @@
  * Autor: Emir Segovia · 2025
  * =============================================================== */
 
+/* ---------- Calendario litúrgico (calculado, sin fechas fijas) ----------
+ * Domingo de Pascua vía algoritmo de Meeus/Jones/Butcher (calendario
+ * gregoriano). A partir de ahí se derivan Ceniza, Semana Santa, Pascua,
+ * Adviento, etc. El ciclo dominical (A/B/C) y ferial (I/II) del
+ * Leccionario se calculan según el año litúrgico vigente.
+ * ---------------------------------------------------------------- */
+function easterDate(year){
+  const a=year%19,b=Math.floor(year/100),c=year%100;
+  const d=Math.floor(b/4),e=b%4,f=Math.floor((b+8)/25),g=Math.floor((b-f+1)/3);
+  const h=(19*a+b-d-g+15)%30,i=Math.floor(c/4),k=c%4;
+  const l=(32+2*e+2*i-h-k)%7,m=Math.floor((a+11*h+22*l)/451);
+  const month=Math.floor((h+l-7*m+114)/31),day=((h+l-7*m+114)%31)+1;
+  return new Date(year,month-1,day);
+}
+function addDays(d,n){const r=new Date(d);r.setDate(r.getDate()+n);return r;}
+function sameDate(a,b){return a.getFullYear()===b.getFullYear()&&a.getMonth()===b.getMonth()&&a.getDate()===b.getDate();}
+function nextSundayOnOrAfter(d){const day=d.getDay();return addDays(d,(7-day)%7);}
+function nextSundayStrictlyAfter(d){const day=d.getDay();return addDays(d,day===0?7:7-day);}
+function adventStart(year){return nextSundayOnOrAfter(new Date(year,10,27));}
+function baptismOfLord(year){
+  const jan6=new Date(year,0,6);
+  if(jan6.getDay()===0)return addDays(jan6,1);
+  return nextSundayStrictlyAfter(jan6);
+}
+function cicloDominical(refYear){return ['A','B','C'][(refYear-1)%3];}
+function cicloFerial(refYear){return refYear%2===0?'II':'I';}
+
+function getLiturgicalToday(baseDate){
+  const now=baseDate?new Date(baseDate):new Date();
+  const t=new Date(now.getFullYear(),now.getMonth(),now.getDate());
+  const y=t.getFullYear();
+  const eq=d=>sameDate(t,d);
+  const between=(a,b)=>t>=a&&t<=b;
+
+  const easterY=easterDate(y);
+  const ashWedY=addDays(easterY,-46);
+  const palmSundayY=addDays(easterY,-7);
+  const holyThuY=addDays(easterY,-3);
+  const goodFriY=addDays(easterY,-2);
+  const holySatY=addDays(easterY,-1);
+  const pentecostY=addDays(easterY,49);
+  const laetareY=addDays(ashWedY,25);
+  const adventY=adventStart(y);
+  const gaudeteY=addDays(adventY,14);
+  const christKingY=addDays(adventY,-7);
+  const baptismY=baptismOfLord(y);
+  const christmasY=new Date(y,11,25);
+
+  let season='Tiempo Ordinario',color='#4a7a4a',colorNombre='Verde',detalle='';
+
+  if(between(new Date(y,0,1),baptismY)){
+    season='Navidad';color='#c9a84c';colorNombre='Blanco / Dorado';
+    if(eq(new Date(y,0,1)))detalle='Santa María, Madre de Dios';
+    if(eq(new Date(y,0,6)))detalle='Epifanía del Señor';
+    if(eq(baptismY))detalle='Bautismo del Señor';
+  }else if(t>baptismY&&t<ashWedY){
+    season='Tiempo Ordinario';color='#4a7a4a';colorNombre='Verde';
+  }else if(between(ashWedY,addDays(palmSundayY,-1))){
+    season='Cuaresma';color='#6b3a6b';colorNombre='Morado';
+    if(eq(ashWedY))detalle='Miércoles de Ceniza';
+    if(eq(laetareY)){colorNombre='Rosa';detalle='4º Domingo de Cuaresma — Laetare';}
+  }else if(between(palmSundayY,addDays(holyThuY,-1))){
+    season='Semana Santa';color='#8b1a1a';colorNombre='Rojo';
+    if(eq(palmSundayY))detalle='Domingo de Ramos';
+  }else if(between(holyThuY,holySatY)){
+    season='Triduo Pascual';color='#8b1a1a';colorNombre='Rojo / Blanco';
+    if(eq(holyThuY))detalle='Jueves Santo — Cena del Señor';
+    if(eq(goodFriY))detalle='Viernes Santo — Pasión del Señor';
+    if(eq(holySatY))detalle='Sábado Santo — Vigilia Pascual';
+  }else if(between(easterY,pentecostY)){
+    season='Pascua';color='#c9a84c';colorNombre='Blanco / Dorado';
+    if(eq(easterY))detalle='Domingo de Resurrección';
+    if(eq(pentecostY))detalle='Pentecostés';
+  }else if(t>pentecostY&&t<adventY){
+    season='Tiempo Ordinario';color='#4a7a4a';colorNombre='Verde';
+    if(eq(christKingY)){color='#c9a84c';colorNombre='Blanco';detalle='Nuestro Señor Jesucristo, Rey del Universo';}
+  }else if(between(adventY,addDays(christmasY,-1))){
+    season='Adviento';color='#4a5c8c';colorNombre='Morado';
+    if(eq(gaudeteY)){colorNombre='Rosa';detalle='3º Domingo de Adviento — Gaudete';}
+  }else if(t>=christmasY){
+    season='Navidad';color='#c9a84c';colorNombre='Blanco / Dorado';
+    if(eq(christmasY))detalle='Natividad del Señor';
+  }
+
+  const refYear=t>=adventY?y+1:y;
+
+  return{fecha:t,season,color,colorNombre,detalle,cicloDom:cicloDominical(refYear),cicloFer:cicloFerial(refYear)};
+}
+
+function renderHoyLiturgico(){
+  const el=document.getElementById('hoyLiturgico');
+  if(!el)return;
+  const info=getLiturgicalToday();
+  const fechaTxt=info.fecha.toLocaleDateString('es-AR',{weekday:'long',day:'numeric',month:'long',year:'numeric'});
+  const fechaCap=fechaTxt.charAt(0).toUpperCase()+fechaTxt.slice(1);
+  el.style.setProperty('--hoy-color',info.color);
+  el.innerHTML=
+    '<div class="hoy-fecha">'+fechaCap+'</div>'
+    +'<div class="hoy-tiempo"><span class="hoy-dot" style="background:'+info.color+'"></span>'+info.season+'</div>'
+    +'<div class="hoy-colorlit">Color litúrgico: '+info.colorNombre+(info.detalle?' · '+info.detalle:'')+'</div>'
+    +'<div class="hoy-ciclos">Ciclo dominical <strong>'+info.cicloDom+'</strong> · Ciclo ferial <strong>'+info.cicloFer+'</strong></div>'
+    +'<a class="hoy-cta" href="https://www.vaticannews.va/es/evangelio-de-hoy.html" target="_blank" rel="noopener">Leer las lecturas de hoy ↗</a>';
+}
+
 function renderVersiculos(){
   const g=document.getElementById('vg');
   g.innerHTML='';
@@ -20,11 +124,49 @@ function renderVersiculos(){
 }
 let lista=[...CARDS],idx=0;
 function st(t,btn){document.querySelectorAll('#md .fbtn').forEach(b=>b.classList.remove('on'));btn.classList.add('on');lista=t==='todos'?[...CARDS]:CARDS.filter(c=>c.tema===t);idx=0;sc();}
-function sc(){const c=lista[idx];document.getElementById('card').classList.remove('flipped');['flabel','blabel'].forEach(id=>{document.getElementById(id).textContent=c.l;document.getElementById(id).style.cssText='background:'+c.c+'22;color:'+c.c+';border:1px solid '+c.c+'44;';});document.getElementById('fq').innerHTML=c.q;document.getElementById('fa').innerHTML=c.a;document.getElementById('fhint').textContent=c.h||'';document.getElementById('prog').textContent=(idx+1)+' / '+lista.length;document.getElementById('prev').disabled=idx===0;document.getElementById('next').disabled=idx===lista.length-1;}
+function ajustarAlturaCard(){
+  const card=document.getElementById('card');
+  if(!card)return;
+  const front=card.querySelector('.front');
+  const back=card.querySelector('.back');
+  card.style.height='auto';
+  const h=Math.max(front.scrollHeight,back.scrollHeight,200);
+  card.style.height=h+'px';
+}
+function sc(){const c=lista[idx];document.getElementById('card').classList.remove('flipped');['flabel','blabel'].forEach(id=>{document.getElementById(id).textContent=c.l;document.getElementById(id).style.cssText='background:'+c.c+'22;color:'+c.c+';border:1px solid '+c.c+'44;';});document.getElementById('fq').innerHTML=c.q;document.getElementById('fa').innerHTML=c.a;document.getElementById('fhint').textContent=c.h||'';document.getElementById('prog').textContent=(idx+1)+' / '+lista.length;document.getElementById('prev').disabled=idx===0;document.getElementById('next').disabled=idx===lista.length-1;ajustarAlturaCard();}
 function flip(){document.getElementById('card').classList.toggle('flipped');}
 function nav(d){idx=Math.max(0,Math.min(lista.length-1,idx+d));sc();}
 function shu(){for(let i=lista.length-1;i>0;i--){const j=Math.floor(Math.random()*(i+1));[lista[i],lista[j]]=[lista[j],lista[i]];}idx=0;sc();}
-function renderLiturgia(){const g=document.getElementById('lg');LITURGIA.forEach(t=>{const c=document.createElement('div');c.className='tc';const fh=t.fechas.map(f=>'<div class="fi"><div class="fd">'+f.d+'</div><div class="fn">'+f.n+'</div><div class="fnota">'+f.nota+'</div></div>').join('');c.innerHTML='<div class="th" onclick="tog(this)"><span class="tdot" style="background:'+t.color+'"></span><span class="ttit">'+t.n+'</span><span class="tdesc">'+t.d+'</span><span class="tchev">▼</span></div><div class="tb"><div class="ti">'+t.i+'</div><div style="font-family:var(--font-title);font-size:11.5px;color:var(--gold);letter-spacing:2px;margin-bottom:10px;text-transform:uppercase">✦ Color litúrgico: '+t.cl+'</div><div class="fg">'+fh+'</div></div>';g.appendChild(c);});}
+function proximaOcurrencia(calcFn){
+  const hoy=new Date();hoy.setHours(0,0,0,0);
+  let d=calcFn(hoy.getFullYear());
+  if(d<hoy)d=calcFn(hoy.getFullYear()+1);
+  return d;
+}
+function formatoFechaLarga(d){
+  const s=d.toLocaleDateString('es-AR',{day:'numeric',month:'long',year:'numeric'});
+  return s;
+}
+function fechasLiturgicasProximas(){
+  return{
+    '{{FECHA_ADVIENTO}}':formatoFechaLarga(proximaOcurrencia(adventStart)),
+    '{{FECHA_CENIZA}}':formatoFechaLarga(proximaOcurrencia(y=>addDays(easterDate(y),-46))),
+    '{{FECHA_PASCUA}}':formatoFechaLarga(proximaOcurrencia(easterDate)),
+    '{{FECHA_PENTECOSTES}}':formatoFechaLarga(proximaOcurrencia(y=>addDays(easterDate(y),49))),
+  };
+}
+function renderLiturgia(){
+  const g=document.getElementById('lg');
+  const reemplazos=fechasLiturgicasProximas();
+  const sub=s=>s.replace(/\{\{\w+\}\}/g,m=>reemplazos[m]!==undefined?reemplazos[m]:m);
+  LITURGIA.forEach(t=>{
+    const c=document.createElement('div');
+    c.className='tc';
+    const fh=t.fechas.map(f=>'<div class="fi"><div class="fd">'+f.d+'</div><div class="fn">'+f.n+'</div><div class="fnota">'+sub(f.nota)+'</div></div>').join('');
+    c.innerHTML='<div class="th" onclick="tog(this)"><span class="tdot" style="background:'+t.color+'"></span><span class="ttit">'+t.n+'</span><span class="tdesc">'+t.d+'</span><span class="tchev">▼</span></div><div class="tb"><div class="ti">'+t.i+'</div><div style="font-family:var(--font-title);font-size:11.5px;color:var(--gold);letter-spacing:2px;margin-bottom:10px;text-transform:uppercase">✦ Color litúrgico: '+t.cl+'</div><div class="fg">'+fh+'</div></div>';
+    g.appendChild(c);
+  });
+}
 function tog(h){const b=h.nextElementSibling;const ch=h.querySelector('.tchev');b.classList.toggle('open');ch.style.transform=b.classList.contains('open')?'rotate(180deg)':'';}
 function renderOraciones(){const g=document.getElementById('og');ORACIONES.forEach(o=>{const c=document.createElement('div');c.className='oc';c.innerHTML='<div class="oh" onclick="togO(this)"><span style="color:var(--gold);font-size:16px">✝</span><span class="otit">'+o.t+'</span><span class="otype">'+o.tp+'</span><span class="ochev">▼</span></div><div class="ob"><div class="otxt">'+o.tx+'</div><div class="oorig">— '+o.o+'</div></div>';g.appendChild(c);});}
 function togO(h){const b=h.nextElementSibling;const ch=h.querySelector('.ochev');b.classList.toggle('open');ch.style.transform=b.classList.contains('open')?'rotate(180deg)':'';}
@@ -53,6 +195,21 @@ function renderSalmos(){const g=document.getElementById('slg');SALMOS.forEach(s=
 function togS(h){const b=h.nextElementSibling;const ch=h.querySelector('.slchev');b.classList.toggle('open');ch.style.transform=b.classList.contains('open')?'rotate(180deg)':'';}
 function togSec(h){const body=h.nextElementSibling;const isOpen=body.classList.toggle('open');h.classList.toggle('open',isOpen);}
 
+function togglePuerta(h){
+  const puerta=h.closest('.puerta');
+  if(!puerta)return;
+  const abierta=puerta.classList.toggle('abierta');
+  const boton=puerta.querySelector('.puerta-hoja');
+  if(boton)boton.setAttribute('aria-expanded',String(abierta));
+}
+function initPuertas(){
+  document.querySelectorAll('.puerta-contenido[role="button"]').forEach(el=>{
+    el.addEventListener('keydown',e=>{
+      if(e.key==='Enter'||e.key===' '){e.preventDefault();togglePuerta(el);}
+    });
+  });
+}
+
 function goTo(id){
   const sec=document.getElementById(id);
   const head=sec.querySelector('.sec-head');
@@ -78,11 +235,35 @@ function initScrollSpy(){
   },{root:main,rootMargin:'-35% 0px -55% 0px',threshold:0});
   secs.forEach(s=>obs.observe(s));
 }
-renderVersiculos();sc();renderLiturgia();renderOraciones();renderSantosGaleria();renderSantos();renderSalmos();initScrollSpy();
+renderVersiculos();sc();renderHoyLiturgico();renderLiturgia();renderOraciones();renderSantosGaleria();renderSantos();renderSalmos();initScrollSpy();initPuertas();
+
+let resizeTimer;
+window.addEventListener('resize',()=>{
+  clearTimeout(resizeTimer);
+  resizeTimer=setTimeout(ajustarAlturaCard,150);
+});
+
+if(document.fonts&&document.fonts.ready){
+  document.fonts.ready.then(ajustarAlturaCard);
+}
+
+// Reacciona a cualquier cambio real de tamaño del contenido (swap de
+// fuente, zoom, reflow) sin depender de adivinar el momento exacto.
+(function(){
+  const cardEl=document.getElementById('card');
+  if(!cardEl||!('ResizeObserver' in window))return;
+  const front=cardEl.querySelector('.front');
+  const back=cardEl.querySelector('.back');
+  const ro=new ResizeObserver(()=>{ajustarAlturaCard();});
+  ro.observe(front);
+  ro.observe(back);
+})();
 
 // Expose to global scope
 window.togSec=togSec;
+window.togglePuerta=togglePuerta;
 window.renderVersiculos=renderVersiculos;
+window.renderHoyLiturgico=renderHoyLiturgico;
 window.renderSantosGaleria=renderSantosGaleria;
 window.st=st;
 window.sc=sc;

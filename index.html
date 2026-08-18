@@ -104,6 +104,80 @@
     <div class="sec-desc">Los tiempos sagrados del calendario de la Iglesia Católica con sus fechas principales</div>
   </div>
   <div class="sec-body">
+    <div class="hoy-liturgico" id="hoyLiturgico"></div>
+    <p class="hoy-explicacion">El Leccionario reparte las lecturas de la Misa en un ciclo de 3 años para los domingos (A, B, C) y de 2 años para los días de semana (I, II). Por eso, aunque sea la misma fecha del calendario civil, cada año se proclaman pasajes distintos de la Escritura.</p>
+
+    <h3 class="subsec-title">Cómo abrir la Palabra</h3>
+    <p class="subsec-desc">Cinco puertas, cinco pasos. Tocá cada una para abrirla.</p>
+    <div class="puertas-lectura">
+      <div class="puerta-paso">
+        <div class="puerta-marca"><span class="puerta-num">I</span></div>
+        <div class="puerta">
+          <div class="puerta-luz" aria-hidden="true"></div>
+          <div class="puerta-contenido" onclick="togglePuerta(this)" role="button" tabindex="0">
+            <p>No hace falta arrancar por Génesis ni leer en orden. Un evangelio, un salmo, o lo que te haga ruido hoy: cualquier puerta te lleva adentro.</p>
+          </div>
+          <button class="puerta-hoja" onclick="togglePuerta(this)" aria-expanded="false" aria-label="Paso 1: Elegí por dónde empezar">
+            <span class="puerta-titulo">Elegí por dónde empezar</span>
+            <span class="puerta-pomo" aria-hidden="true"></span>
+          </button>
+        </div>
+      </div>
+      <div class="puerta-paso">
+        <div class="puerta-marca"><span class="puerta-num">II</span></div>
+        <div class="puerta">
+          <div class="puerta-luz" aria-hidden="true"></div>
+          <div class="puerta-contenido" onclick="togglePuerta(this)" role="button" tabindex="0">
+            <p>Mejor unos versículos leídos con calma que un capítulo entero por cumplir. La Escritura no se mide en páginas.</p>
+          </div>
+          <button class="puerta-hoja" onclick="togglePuerta(this)" aria-expanded="false" aria-label="Paso 2: Un pasaje corto alcanza">
+            <span class="puerta-titulo">Un pasaje corto alcanza</span>
+            <span class="puerta-pomo" aria-hidden="true"></span>
+          </button>
+        </div>
+      </div>
+      <div class="puerta-paso">
+        <div class="puerta-marca"><span class="puerta-num">III</span></div>
+        <div class="puerta">
+          <div class="puerta-luz" aria-hidden="true"></div>
+          <div class="puerta-contenido" onclick="togglePuerta(this)" role="button" tabindex="0">
+            <p>La primera vez, para entender qué pasa. La segunda, más despacio, para escuchar qué te dice a vos.</p>
+          </div>
+          <button class="puerta-hoja" onclick="togglePuerta(this)" aria-expanded="false" aria-label="Paso 3: Leelo dos veces">
+            <span class="puerta-titulo">Leelo dos veces</span>
+            <span class="puerta-pomo" aria-hidden="true"></span>
+          </button>
+        </div>
+      </div>
+      <div class="puerta-paso">
+        <div class="puerta-marca"><span class="puerta-num">IV</span></div>
+        <div class="puerta">
+          <div class="puerta-luz" aria-hidden="true"></div>
+          <div class="puerta-contenido" onclick="togglePuerta(this)" role="button" tabindex="0">
+            <p>¿Qué palabra se te queda? ¿A quién te parecés en la escena? No busques una respuesta perfecta, buscá una honesta.</p>
+          </div>
+          <button class="puerta-hoja" onclick="togglePuerta(this)" aria-expanded="false" aria-label="Paso 4: Preguntate qué te toca">
+            <span class="puerta-titulo">Preguntate qué te toca</span>
+            <span class="puerta-pomo" aria-hidden="true"></span>
+          </button>
+        </div>
+      </div>
+      <div class="puerta-paso">
+        <div class="puerta-marca"><span class="puerta-num">V</span></div>
+        <div class="puerta">
+          <div class="puerta-luz" aria-hidden="true"></div>
+          <div class="puerta-contenido" onclick="togglePuerta(this)" role="button" tabindex="0">
+            <p>No hace falta que sea larga ni elaborada. Alcanza con decirle a Dios lo que te pasó leyendo — hasta un simple "gracias" o "ayudame".</p>
+          </div>
+          <button class="puerta-hoja" onclick="togglePuerta(this)" aria-expanded="false" aria-label="Paso 5: Cerrá con una oración corta">
+            <span class="puerta-titulo">Cerrá con una oración corta</span>
+            <span class="puerta-pomo" aria-hidden="true"></span>
+          </button>
+        </div>
+      </div>
+    </div>
+
+    <h3 class="subsec-title">Tiempos del año litúrgico</h3>
     <div class="tg" id="lg"></div>
   </div>
 </div>

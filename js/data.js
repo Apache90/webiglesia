@@ -125,7 +125,7 @@ const CARDS=[
 ];
 const LITURGIA=[
   {color:'#4a5c8c',n:'Adviento',d:'Preparación y espera · Color morado',i:'El Adviento es el tiempo de preparación para la Navidad y de espera de la segunda venida de Cristo. Comienza el 4º domingo antes del 25 de diciembre. El color litúrgico es el morado (penitencia y espera), excepto el 3er domingo "Gaudete" (rosa). Dura entre 22 y 28 días.',cl:'Morado / Rosa (3er domingo)',fechas:[
-    {d:'1er domingo de Adviento 2025',n:'Inicio del Adviento',nota:'30 de noviembre de 2025'},
+    {d:'1er domingo de Adviento',n:'Inicio del Adviento',nota:'{{FECHA_ADVIENTO}}'},
     {d:'8 de diciembre',n:'Inmaculada Concepción',nota:'Solemnidad. Dogma definido en 1854 por Pío IX'},
     {d:'3er domingo',n:'Domingo Gaudete',nota:'Color rosa. "Alegraos" (Flp 4,4)'},
     {d:'17–24 diciembre',n:'Antífonas "O"',nota:'Siete días de intensa preparación'},
@@ -142,10 +142,10 @@ const LITURGIA=[
   {color:'#4a7a4a',n:'Tiempo Ordinario (I)',d:'Semanas 1 a 8 · Color verde',i:'El Tiempo Ordinario es el período donde se medita la vida pública de Jesús. El color verde simboliza la esperanza y el crecimiento espiritual. La primera parte va desde el Bautismo del Señor hasta el Miércoles de Ceniza.',cl:'Verde',fechas:[
     {d:'2 de febrero',n:'Presentación del Señor',nota:'Fiesta. 40 días después de Navidad. "La Candelaria"'},
     {d:'Variable (antes Cuaresma)',n:'Martes de Carnaval',nota:'Último día antes del Miércoles de Ceniza'},
-    {d:'Variable',n:'Miércoles de Ceniza 2026',nota:'18 de febrero de 2026. Inicio de la Cuaresma'},
+    {d:'Variable',n:'Miércoles de Ceniza',nota:'{{FECHA_CENIZA}}. Inicio de la Cuaresma'},
   ]},
   {color:'#6b3a6b',n:'Cuaresma',d:'40 días de conversión · Color morado',i:'La Cuaresma es el tiempo de conversión, penitencia y preparación para la Pascua. Dura 40 días (sin contar domingos) en recuerdo de los 40 años en el desierto y los 40 días de ayuno de Jesús. Comienza el Miércoles de Ceniza.',cl:'Morado / Rosa (4to domingo)',fechas:[
-    {d:'Miércoles de Ceniza 2026',n:'Inicio de la Cuaresma',nota:'18 de febrero de 2026'},
+    {d:'Miércoles de Ceniza',n:'Inicio de la Cuaresma',nota:'{{FECHA_CENIZA}}'},
     {d:'2° domingo',n:'Transfiguración del Señor',nota:'Anticipo de la gloria pascual'},
     {d:'4° domingo',n:'Domingo Laetare',nota:'Color rosa. "Alégrate, Jerusalén"'},
     {d:'5° domingo',n:'Domingo de Pasión',nota:'Se recuerda el inicio de la Pasión'},
@@ -155,10 +155,10 @@ const LITURGIA=[
     {d:'Jueves Santo',n:'Misa de la Cena del Señor',nota:'Institución de la Eucaristía y el sacerdocio. Lavatorio de pies'},
     {d:'Viernes Santo',n:'Pasión del Señor',nota:'Única celebración sin Eucaristía. Adoración de la Cruz'},
     {d:'Sábado Santo',n:'Vigilia Pascual',nota:'La madre de todas las vigilias. Fuego nuevo, Exultet, bautismos'},
-    {d:'Domingo de Pascua 2026',n:'Resurrección del Señor',nota:'5 de abril de 2026. Solemnidad de solemnidades'},
+    {d:'Domingo de Pascua',n:'Resurrección del Señor',nota:'{{FECHA_PASCUA}}. Solemnidad de solemnidades'},
     {d:'2° domingo de Pascua',n:'Divina Misericordia',nota:'Instituida por San Juan Pablo II en 2000'},
     {d:'40 días después',n:'Ascensión del Señor',nota:'Solemnidad. En muchos países: 7° domingo de Pascua'},
-    {d:'50 días después',n:'Pentecostés 2026',nota:'24 de mayo de 2026. Venida del Espíritu Santo'},
+    {d:'50 días después',n:'Pentecostés',nota:'{{FECHA_PENTECOSTES}}. Venida del Espíritu Santo'},
   ]},
   {color:'#4a6c8c',n:'Tiempo Ordinario (II) y Solemnidades',d:'Pentecostés al fin del año · Color verde/blanco',i:'La segunda parte del Tiempo Ordinario va desde Pentecostés hasta el final del año litúrgico. Incluye grandes solemnidades que enriquecen el camino de la Iglesia.',cl:'Verde / Blanco (solemnidades)',fechas:[
     {d:'Dom. después Pentecostés',n:'Santísima Trinidad',nota:'Solemnidad. Misterio central de la fe cristiana'},
