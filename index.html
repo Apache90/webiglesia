@@ -26,7 +26,7 @@
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0, viewport-fit=cover">
 <title>Biblia Católica — Guía Espiritual · Emir Segovia</title>
-<meta name="description" content="Versículos, meditación diaria, año litúrgico, oraciones, santos y salmos de la tradición católica.">
+<meta name="description" content="Año litúrgico, oraciones, santos, salmos, versículos y meditación diaria de la tradición católica.">
 <meta name="theme-color" content="#0a0800">
 <meta name="mobile-web-app-capable" content="yes">
 <meta name="apple-mobile-web-app-capable" content="yes">
@@ -51,59 +51,16 @@
 
 <main class="main" id="mainScroll">
 
-<div class="sec" id="vs">
+<div class="sec" id="li">
   <div class="intro-card">
     <div class="intro-card-eyebrow">Apocalipsis 3 · 20</div>
     <p class="intro-card-verse">"Yo estoy junto a la puerta y llamo: si alguien oye mi voz y me abre, entraré en su casa y cenaremos juntos."</p>
   </div>
   <div class="sec-head open" onclick="togSec(this)">
-    <div class="sec-title-row"><span class="sec-title">Versículos por Estado del Alma</span><span class="sec-chev">▼</span></div>
-    <div class="sec-desc">Palabras de la Escritura para cada momento del corazón humano. Tocá un estado para desplegarlo.</div>
-  </div>
-  <div class="sec-body open">
-    <div class="mg" id="vg"></div>
-  </div>
-</div>
-
-<div class="sec" id="md">
-  <div class="sec-head" onclick="togSec(this)">
-    <div class="sec-title-row"><span class="sec-title">Meditación Diaria</span><span class="sec-chev">▼</span></div>
-    <div class="sec-desc">Tocá la tarjeta para descubrir la reflexión sobre cada versículo</div>
-  </div>
-  <div class="sec-body">
-    <div class="cc">
-      <div class="filtros" style="margin:0">
-        <button class="fbtn on" onclick="st('todos',this)">Todos</button>
-        <button class="fbtn" onclick="st('tristeza',this)">Tristeza</button>
-        <button class="fbtn" onclick="st('alegria',this)">Alegría</button>
-        <button class="fbtn" onclick="st('miedo',this)">Miedo</button>
-        <button class="fbtn" onclick="st('esperanza',this)">Esperanza</button>
-        <button class="fbtn" onclick="st('fortaleza',this)">Fortaleza</button>
-        <button class="fbtn" onclick="st('paz',this)">Paz</button>
-      </div>
-      <span class="pb" id="prog"></span>
-    </div>
-    <p class="fh">✦ Tocá la tarjeta para la reflexión ✦</p>
-    <div class="ca">
-      <div class="card" id="card" onclick="flip()">
-        <div class="face front"><span class="cl" id="flabel"></span><p class="cq" id="fq"></p><p class="ct">— Tocá para meditar —</p></div>
-        <div class="face back"><span class="cl" id="blabel"></span><p class="cr" id="fa"></p><p class="ch" id="fhint"></p></div>
-      </div>
-    </div>
-    <div class="navs">
-      <button class="nb2" id="prev" onclick="nav(-1)">← Anterior</button>
-      <button class="nb2 sh" onclick="shu()">✦ Mezclar</button>
-      <button class="nb2" id="next" onclick="nav(1)">Siguiente →</button>
-    </div>
-  </div>
-</div>
-
-<div class="sec" id="li">
-  <div class="sec-head" onclick="togSec(this)">
     <div class="sec-title-row"><span class="sec-title">Año Litúrgico</span><span class="sec-chev">▼</span></div>
     <div class="sec-desc">Los tiempos sagrados del calendario de la Iglesia Católica con sus fechas principales</div>
   </div>
-  <div class="sec-body">
+  <div class="sec-body open">
     <div class="hoy-liturgico" id="hoyLiturgico"></div>
     <p class="hoy-explicacion">El Leccionario reparte las lecturas de la Misa en un ciclo de 3 años para los domingos (A, B, C) y de 2 años para los días de semana (I, II). Por eso, aunque sea la misma fecha del calendario civil, cada año se proclaman pasajes distintos de la Escritura.</p>
 
@@ -237,21 +194,56 @@
   </div>
 </div>
 
+<div class="sec" id="vs">
+  <div class="sec-head" onclick="togSec(this)">
+    <div class="sec-title-row"><span class="sec-title">Versículos por Estado del Alma</span><span class="sec-chev">▼</span></div>
+    <div class="sec-desc">Palabras de la Escritura para cada momento del corazón humano. Tocá un estado para desplegarlo.</div>
+  </div>
+  <div class="sec-body">
+    <div class="mg" id="vg"></div>
+  </div>
+</div>
+
+<div class="sec" id="md">
+  <div class="sec-head" onclick="togSec(this)">
+    <div class="sec-title-row"><span class="sec-title">Meditación Diaria</span><span class="sec-chev">▼</span></div>
+    <div class="sec-desc">Tocá la tarjeta para descubrir la reflexión sobre cada versículo</div>
+  </div>
+  <div class="sec-body">
+    <div class="cc">
+      <div class="filtros" style="margin:0">
+        <button class="fbtn on" onclick="st('todos',this)">Todos</button>
+        <button class="fbtn" onclick="st('tristeza',this)">Tristeza</button>
+        <button class="fbtn" onclick="st('alegria',this)">Alegría</button>
+        <button class="fbtn" onclick="st('miedo',this)">Miedo</button>
+        <button class="fbtn" onclick="st('esperanza',this)">Esperanza</button>
+        <button class="fbtn" onclick="st('fortaleza',this)">Fortaleza</button>
+        <button class="fbtn" onclick="st('paz',this)">Paz</button>
+      </div>
+      <span class="pb" id="prog"></span>
+    </div>
+    <p class="fh">✦ Tocá la tarjeta para la reflexión ✦</p>
+    <div class="ca">
+      <div class="card" id="card" onclick="flip()">
+        <div class="face front"><span class="cl" id="flabel"></span><p class="cq" id="fq"></p><p class="ct">— Tocá para meditar —</p></div>
+        <div class="face back"><span class="cl" id="blabel"></span><p class="cr" id="fa"></p><p class="ch" id="fhint"></p></div>
+      </div>
+    </div>
+    <div class="navs">
+      <button class="nb2" id="prev" onclick="nav(-1)">← Anterior</button>
+      <button class="nb2 sh" onclick="shu()">✦ Mezclar</button>
+      <button class="nb2" id="next" onclick="nav(1)">Siguiente →</button>
+    </div>
+  </div>
+</div>
+
 <div class="footer">✝ &nbsp; Hecho para la comunidad por &nbsp; <span>Emir Segovia</span> &nbsp; ✝</div>
 <div class="footer-source">Citas bíblicas revisadas según <a href="https://www.vatican.va/content/bibbia/es.html" target="_blank" rel="noopener">la Biblia en el sitio oficial de la Santa Sede</a> (El Libro del Pueblo de Dios).</div>
 
 </main>
 
 <nav class="tabbar" aria-label="Navegación principal">
-  <button class="tabbtn on" data-screen="vs" onclick="goTo('vs')">
-    <svg viewBox="0 0 24 24" aria-hidden="true"><path d="M4 4.5C4 4 4.5 3.5 6 3.5c3 0 5 1 6 2 1-1 3-2 6-2 1.5 0 2 .5 2 1v14c0 .5-.5 1-2 1-3 0-5 1-6 2-1-1-3-2-6-2-1.5 0-2-.5-2-1z" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linejoin="round"/><path d="M12 5.5v14" fill="none" stroke="currentColor" stroke-width="1.6"/></svg>
-    <span>Versículos</span>
-  </button>
-  <button class="tabbtn" data-screen="md" onclick="goTo('md')">
-    <svg viewBox="0 0 24 24" aria-hidden="true"><rect x="4" y="3.5" width="16" height="17" rx="2.2" fill="none" stroke="currentColor" stroke-width="1.6"/><path d="M8 9h8M8 13h8M8 17h5" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round"/></svg>
-    <span>Meditar</span>
-  </button>
-  <button class="tabbtn" data-screen="li" onclick="goTo('li')">
+  <button class="tabbtn on" data-screen="li" onclick="goTo('li')">
     <svg viewBox="0 0 24 24" aria-hidden="true"><rect x="3.5" y="4.5" width="17" height="16" rx="2" fill="none" stroke="currentColor" stroke-width="1.6"/><path d="M3.5 9h17M8 3v3M16 3v3" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round"/></svg>
     <span>Liturgia</span>
   </button>
@@ -266,6 +258,14 @@
   <button class="tabbtn" data-screen="sl" onclick="goTo('sl')">
     <svg viewBox="0 0 24 24" aria-hidden="true"><path d="M9 18V5l10-2v13" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linejoin="round"/><circle cx="6.5" cy="18" r="2.5" fill="none" stroke="currentColor" stroke-width="1.6"/><circle cx="16.5" cy="16" r="2.5" fill="none" stroke="currentColor" stroke-width="1.6"/></svg>
     <span>Salmos</span>
+  </button>
+  <button class="tabbtn" data-screen="vs" onclick="goTo('vs')">
+    <svg viewBox="0 0 24 24" aria-hidden="true"><path d="M4 4.5C4 4 4.5 3.5 6 3.5c3 0 5 1 6 2 1-1 3-2 6-2 1.5 0 2 .5 2 1v14c0 .5-.5 1-2 1-3 0-5 1-6 2-1-1-3-2-6-2-1.5 0-2-.5-2-1z" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linejoin="round"/><path d="M12 5.5v14" fill="none" stroke="currentColor" stroke-width="1.6"/></svg>
+    <span>Versículos</span>
+  </button>
+  <button class="tabbtn" data-screen="md" onclick="goTo('md')">
+    <svg viewBox="0 0 24 24" aria-hidden="true"><rect x="4" y="3.5" width="16" height="17" rx="2.2" fill="none" stroke="currentColor" stroke-width="1.6"/><path d="M8 9h8M8 13h8M8 17h5" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round"/></svg>
+    <span>Meditar</span>
   </button>
 </nav>
 
