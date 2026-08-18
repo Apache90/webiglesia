@@ -184,11 +184,33 @@
 
 <div class="sec" id="or">
   <div class="sec-head" onclick="togSec(this)">
-    <div class="sec-title-row"><span class="sec-title">Oraciones Clásicas</span><span class="sec-chev">▼</span></div>
-    <div class="sec-desc">Las oraciones fundamentales de la tradición católica</div>
+    <div class="sec-title-row"><span class="sec-title">Oraciones</span><span class="sec-chev">▼</span></div>
+    <div class="sec-desc">Las oraciones fundamentales de la tradición católica, y cómo rezar el Rosario</div>
   </div>
   <div class="sec-body">
+    <h3 class="subsec-title">Oraciones clásicas</h3>
     <div id="og"></div>
+
+    <h3 class="subsec-title">El Rosario</h3>
+    <p class="rosario-intro">El Rosario es una oración que acompaña la vida de Jesús a través de los ojos de María, repitiendo el Padre Nuestro y el Ave María mientras se medita cada escena. Se reza con una cadena de cuentas: las grandes marcan un Padre Nuestro, las chicas un Ave María, agrupadas de a diez en "decenas". Antes de cada decena se anuncia un "misterio" — un episodio del Evangelio — para tenerlo presente mientras rezás. Hay cuatro grupos de cinco misterios, y cada día de la semana le corresponde uno.</p>
+    <div class="rosario-hoy" id="rosarioHoy"></div>
+
+    <p class="rosario-etiqueta">¿Con qué misterios querés rezar? (por defecto, los de hoy)</p>
+    <div class="filtros" id="rosarioChips"></div>
+
+    <p class="rosario-etiqueta">El Rosario tiene 5 decenas — un misterio por cada una. Este número marca en cuál estás:</p>
+    <div class="rosario-progreso">
+      <div class="rosario-decadas" id="rosarioDecadas"></div>
+      <div class="rosario-cuentas" id="rosarioCuentas"></div>
+    </div>
+
+    <div class="rosario-paso" id="rosarioPaso"></div>
+
+    <div class="navs">
+      <button class="nb2" id="rosPrev" onclick="navRosario(-1)">← Anterior</button>
+      <button class="nb2 sh" onclick="reiniciarRosario()">✦ Reiniciar</button>
+      <button class="nb2" id="rosNext" onclick="navRosario(1)">Siguiente →</button>
+    </div>
   </div>
 </div>
 

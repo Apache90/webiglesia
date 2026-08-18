@@ -152,6 +152,39 @@ button{font:inherit;-webkit-tap-highlight-color:transparent;-webkit-user-select:
   .puerta-luz{transition:opacity .25s ease;}
 }
 
+/* ===== El Rosario ===== */
+.rosario-progreso{margin:18px 0;display:flex;flex-direction:column;gap:14px;}
+.rosario-decadas{display:flex;justify-content:space-between;gap:6px;}
+.decada-dot{flex:1;max-width:44px;aspect-ratio:1;border-radius:50%;display:flex;align-items:center;justify-content:center;font-family:var(--font-title);font-size:13px;font-weight:600;color:var(--text3);background:var(--surface);border:1px solid var(--border);transition:all .3s ease;}
+.decada-dot.completa{background:var(--gold-dim);color:var(--gold2);border-color:var(--border2);}
+.decada-dot.activa{background:var(--gold);color:var(--surface);border-color:var(--gold);box-shadow:0 0 14px rgba(201,168,76,.6);transform:scale(1.12);}
+.rosario-cuentas{display:flex;flex-wrap:wrap;gap:7px;justify-content:center;min-height:14px;}
+.cuenta-dot{width:11px;height:11px;border-radius:50%;background:var(--surface2);border:1px solid var(--border2);transition:all .25s ease;}
+.cuenta-dot.llena{background:var(--gold);box-shadow:0 0 6px rgba(201,168,76,.6);}
+.rosario-cuentas.sellado .cuenta-dot.llena{animation:cuentaSello .7s ease both;}
+.rosario-cuentas.sellado .cuenta-dot.llena:nth-child(1){animation-delay:0ms;}
+.rosario-cuentas.sellado .cuenta-dot.llena:nth-child(2){animation-delay:35ms;}
+.rosario-cuentas.sellado .cuenta-dot.llena:nth-child(3){animation-delay:70ms;}
+.rosario-cuentas.sellado .cuenta-dot.llena:nth-child(4){animation-delay:105ms;}
+.rosario-cuentas.sellado .cuenta-dot.llena:nth-child(5){animation-delay:140ms;}
+.rosario-cuentas.sellado .cuenta-dot.llena:nth-child(6){animation-delay:175ms;}
+.rosario-cuentas.sellado .cuenta-dot.llena:nth-child(7){animation-delay:210ms;}
+.rosario-cuentas.sellado .cuenta-dot.llena:nth-child(8){animation-delay:245ms;}
+.rosario-cuentas.sellado .cuenta-dot.llena:nth-child(9){animation-delay:280ms;}
+.rosario-cuentas.sellado .cuenta-dot.llena:nth-child(10){animation-delay:315ms;}
+@keyframes cuentaSello{0%{box-shadow:0 0 6px rgba(201,168,76,.6);transform:scale(1);}45%{box-shadow:0 0 16px 4px rgba(201,168,76,.95);transform:scale(1.35);}100%{box-shadow:0 0 6px rgba(201,168,76,.6);transform:scale(1);}}
+@media (prefers-reduced-motion: reduce){
+  .rosario-cuentas.sellado .cuenta-dot.llena{animation:none;}
+}
+.rosario-paso{border-radius:var(--radius);border:1px solid var(--border2);background:linear-gradient(160deg,rgba(255,255,255,.05),transparent 60%),var(--surface);box-shadow:0 1px 3px rgba(0,0,0,.4),0 6px 16px rgba(0,0,0,.22);padding:24px 22px;min-height:150px;display:flex;flex-direction:column;justify-content:center;margin-bottom:20px;}
+.rosario-intro{font-size:15.5px;color:var(--text2);line-height:1.65;margin:2px 0 20px;}
+.rosario-etiqueta{font-size:13.5px;color:var(--text3);font-style:italic;margin:18px 2px 10px;}
+.rosario-paso-eyebrow{font-family:var(--font-title);font-size:12px;letter-spacing:1.5px;text-transform:uppercase;color:var(--text3);margin-bottom:8px;}
+.rosario-paso-titulo{font-family:var(--font-title);font-size:19px;font-weight:600;color:var(--gold2);margin-bottom:10px;}
+.rosario-paso-texto{font-family:var(--font-verse);font-size:17px;font-style:italic;color:var(--text);line-height:1.75;white-space:pre-line;margin:0;}
+.rosario-misterio{font-family:var(--font-body);font-style:normal;font-size:18px;color:var(--gold3);line-height:1.5;}
+.rosario-paso-hint{font-size:14px;color:var(--text3);font-style:italic;margin-top:10px;}
+
 .santos-galeria{display:grid;grid-template-columns:1fr;gap:16px;margin-bottom:8px;}
 .santo-flip{perspective:1400px;aspect-ratio:4/5;max-width:360px;margin:0 auto;width:100%;cursor:pointer;-webkit-tap-highlight-color:transparent;}
 .santo-flip-inner{position:relative;width:100%;height:100%;transform-style:preserve-3d;transition:transform .5s cubic-bezier(.4,0,.2,1);}

@@ -172,6 +172,7 @@ const LITURGIA=[
   ]},
 ];
 const ORACIONES=[
+  {t:'Señal de la Cruz',tp:'Invocación Trinitaria',o:'Tradición apostólica. Abre y cierra toda oración católica.',tx:'En el nombre del Padre,\ny del Hijo,\ny del Espíritu Santo.\nAmén.'},
   {t:'Padre Nuestro',tp:'Oración del Señor',o:'Mateo 6, 9-13 — La única oración enseñada por Jesús mismo',tx:'Padre nuestro, que estás en el cielo,\nsantificado sea tu Nombre;\nvenga a nosotros tu Reino;\nhágase tu voluntad\nen la tierra como en el cielo.\nDanos hoy nuestro pan de cada día;\nperdona nuestras ofensas,\ncomo también nosotros perdonamos\na los que nos ofenden;\nno nos dejes caer en la tentación,\ny líbranos del mal. Amén.'},
   {t:'Ave María',tp:'Oración Mariana',o:'Lucas 1, 28.42 y tradición de la Iglesia — Oración más rezada del mundo',tx:'Dios te salve, María,\nllena eres de gracia;\nel Señor es contigo.\nBendita tú eres entre todas las mujeres\ny bendito es el fruto de tu vientre, Jesús.\n\nSanta María, Madre de Dios,\nruega por nosotros, pecadores,\nahora y en la hora de nuestra muerte. Amén.'},
   {t:'Gloria al Padre',tp:'Doxología Trinitaria',o:'Tradición apostólica. Se reza al final de cada misterio del Rosario.',tx:'Gloria al Padre,\ny al Hijo,\ny al Espíritu Santo.\nComo era en el principio,\nahora y siempre,\ny por los siglos de los siglos. Amén.'},
@@ -182,6 +183,36 @@ const ORACIONES=[
   {t:'Acto de Contrición',tp:'Oración Penitencial',o:'Tradición de la Iglesia. Se reza antes o después del Sacramento de la Reconciliación.',tx:'Dios mío,\nme arrepiento de todo corazón de todos mis pecados\ny los aborrezco,\nporque al pecar, no solo merezco las penas\nestablecidas por ti justamente,\nsino principalmente porque te ofendí a ti,\nsumo Bien y digno de amor por encima de todas las cosas.\n\nPor eso propongo firmemente,\ncon ayuda de tu gracia,\nno pecar más en adelante\ny huir de las ocasiones de pecado.\nAmén.'},
   {t:'Sub Tuum Praesidium',tp:'Oración Mariana Antigua',o:'Siglo III d.C. Es la oración mariana más antigua conservada, hallada en un papiro egipcio de Oxirrinco.',tx:'Bajo tu amparo nos acogemos,\nSanta Madre de Dios.\nNo deseches las súplicas\nque te dirigimos en nuestras necesidades,\nantes bien líbranos siempre\nde todos los peligros,\noh Virgen gloriosa y bendita. Amén.'},
 ];
+const MISTERIOS_ROSARIO={
+  gozosos:{nombre:'Gozosos',dias:[1,6],diasTxt:'Lunes y sábado',lista:[
+    'La Anunciación del Ángel a María',
+    'La Visitación de María a su prima Isabel',
+    'El Nacimiento de Jesús en Belén',
+    'La Presentación de Jesús en el Templo',
+    'El Niño Jesús perdido y hallado en el Templo',
+  ]},
+  dolorosos:{nombre:'Dolorosos',dias:[2,5],diasTxt:'Martes y viernes',lista:[
+    'La Oración de Jesús en el Huerto',
+    'La Flagelación del Señor atado a la columna',
+    'La Coronación de espinas',
+    'Jesús con la cruz a cuestas camino al Calvario',
+    'La Crucifixión y muerte de Jesús',
+  ]},
+  gloriosos:{nombre:'Gloriosos',dias:[0,3],diasTxt:'Miércoles y domingo',lista:[
+    'La Resurrección del Señor',
+    'La Ascensión del Señor a los cielos',
+    'La Venida del Espíritu Santo sobre María y los Apóstoles',
+    'La Asunción de María al cielo',
+    'La Coronación de María como Reina del cielo y de la tierra',
+  ]},
+  luminosos:{nombre:'Luminosos',dias:[4],diasTxt:'Jueves',lista:[
+    'El Bautismo de Jesús en el Jordán',
+    'Las Bodas de Caná',
+    'El anuncio del Reino de Dios y la llamada a la conversión',
+    'La Transfiguración del Señor',
+    'La Institución de la Eucaristía',
+  ]},
+};
 const SANTOS_DESTACADOS=[
   {id:'acutis',nombre:'San Carlo Acutis',sub:'Patrono de internet',img:'assets/img/santos/san_acutis.webp',bio:'Adolescente italiano (1991–2006), programador aficionado y devoto de la Eucaristía. Usó sus conocimientos de informática para catalogar milagros eucarísticos en un sitio web. Murió de leucemia fulminante a los 15 años. Fue canonizado en 2025.',oracion:'San Carlo Acutis, que usaste la tecnología para acercar a otros a Jesús, ruega por nosotros, para que sepamos poner lo que tenemos al servicio del bien. Amén.'},
   {id:'benito',nombre:'San Benito Abad',sub:'Patrono de Europa',img:'assets/img/santos/san_benito.webp',bio:'Monje italiano (c. 480–547), padre del monaquismo occidental y fundador de la Orden Benedictina. Escribió la Regla de San Benito, resumida en el lema "ora et labora" (reza y trabaja).',oracion:'San Benito, que buscaste a Dios en la oración y en el trabajo de cada día, ruega por nosotros, para que ordenemos nuestra vida en torno a Cristo. Amén.'},

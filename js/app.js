@@ -170,6 +170,140 @@ function renderLiturgia(){
 function tog(h){const b=h.nextElementSibling;const ch=h.querySelector('.tchev');b.classList.toggle('open');ch.style.transform=b.classList.contains('open')?'rotate(180deg)':'';}
 function renderOraciones(){const g=document.getElementById('og');ORACIONES.forEach(o=>{const c=document.createElement('div');c.className='oc';c.innerHTML='<div class="oh" onclick="togO(this)"><span style="color:var(--gold);font-size:16px">✝</span><span class="otit">'+o.t+'</span><span class="otype">'+o.tp+'</span><span class="ochev">▼</span></div><div class="ob"><div class="otxt">'+o.tx+'</div><div class="oorig">— '+o.o+'</div></div>';g.appendChild(c);});}
 function togO(h){const b=h.nextElementSibling;const ch=h.querySelector('.ochev');b.classList.toggle('open');ch.style.transform=b.classList.contains('open')?'rotate(180deg)':'';}
+
+/* ---------- El Rosario ---------- */
+const NUMEROS_ORDINALES=['1er','2°','3er','4°','5°'];
+
+function claveMisterioHoy(){
+  const dia=new Date().getDay();
+  for(const k in MISTERIOS_ROSARIO){if(MISTERIOS_ROSARIO[k].dias.indexOf(dia)!==-1)return k;}
+  return 'gozosos';
+}
+function textoOracion(titulo){const o=ORACIONES.find(x=>x.t===titulo);return o?o.tx:'';}
+
+function generarPasosRosario(clave){
+  const m=MISTERIOS_ROSARIO[clave];
+  const pasos=[];
+  pasos.push({tipo:'cruz',decada:0,titulo:'Señal de la Cruz',oracionT:'Señal de la Cruz'});
+  pasos.push({tipo:'credo',decada:0,titulo:'Credo',oracionT:'Credo Apostólico'});
+  pasos.push({tipo:'grande',decada:0,titulo:'Padre Nuestro',oracionT:'Padre Nuestro'});
+  const virtudes=['por la Fe','por la Esperanza','por la Caridad'];
+  for(let n=1;n<=3;n++){pasos.push({tipo:'chica',decada:0,n:n,total:3,titulo:'Ave María '+n+' de 3 — '+virtudes[n-1],oracionT:'Ave María'});}
+  pasos.push({tipo:'gloria',decada:0,titulo:'Gloria',oracionT:'Gloria al Padre'});
+  for(let d=0;d<5;d++){
+    const dec=d+1;
+    pasos.push({tipo:'misterio',decada:dec,numero:dec,titulo:NUMEROS_ORDINALES[d]+' Misterio '+m.nombre,misterio:m.lista[d]});
+    pasos.push({tipo:'grande',decada:dec,titulo:'Padre Nuestro',oracionT:'Padre Nuestro'});
+    for(let n=1;n<=10;n++){pasos.push({tipo:'chica',decada:dec,n:n,total:10,titulo:'Ave María '+n+' de 10',oracionT:'Ave María'});}
+    pasos.push({tipo:'gloria',decada:dec,titulo:'Gloria',oracionT:'Gloria al Padre'});
+  }
+  pasos.push({tipo:'final',decada:6,titulo:'Salve',oracionT:'Salve Regina'});
+  return pasos;
+}
+
+let rosarioClave=claveMisterioHoy();
+let rosarioPasos=generarPasosRosario(rosarioClave);
+let rosarioIdx=0;
+
+function renderRosarioHoy(){
+  const el=document.getElementById('rosarioHoy');
+  if(!el)return;
+  const hoy=claveMisterioHoy();
+  const mHoy=MISTERIOS_ROSARIO[hoy];
+  const mActivo=MISTERIOS_ROSARIO[rosarioClave];
+  if(rosarioClave===hoy){
+    el.innerHTML='<div class="hoy-fecha">Hoy corresponden</div>'
+      +'<div class="hoy-tiempo"><span class="hoy-dot" style="background:var(--gold)"></span>Misterios '+mActivo.nombre+'</div>'
+      +'<div class="hoy-colorlit">'+mActivo.diasTxt+'</div>';
+  }else{
+    el.innerHTML='<div class="hoy-fecha">Estás rezando</div>'
+      +'<div class="hoy-tiempo"><span class="hoy-dot" style="background:var(--gold)"></span>Misterios '+mActivo.nombre+'</div>'
+      +'<div class="hoy-colorlit">Hoy corresponden los '+mHoy.nombre+' ('+mHoy.diasTxt+')</div>';
+  }
+}
+
+function renderRosarioChips(){
+  const el=document.getElementById('rosarioChips');
+  if(!el)return;
+  el.innerHTML='';
+  Object.keys(MISTERIOS_ROSARIO).forEach(k=>{
+    const btn=document.createElement('button');
+    btn.className='fbtn'+(k===rosarioClave?' on':'');
+    btn.textContent=MISTERIOS_ROSARIO[k].nombre;
+    btn.onclick=()=>iniciarRosario(k,btn);
+    el.appendChild(btn);
+  });
+}
+
+function iniciarRosario(clave,btn){
+  rosarioClave=clave;
+  rosarioPasos=generarPasosRosario(clave);
+  rosarioIdx=0;
+  if(btn){document.querySelectorAll('#rosarioChips .fbtn').forEach(b=>b.classList.remove('on'));btn.classList.add('on');}
+  renderRosarioHoy();
+  renderPasoRosario();
+  const paso=document.getElementById('rosarioPaso');
+  if(paso)paso.scrollIntoView({behavior:'smooth',block:'center'});
+}
+
+function reiniciarRosario(){rosarioIdx=0;renderPasoRosario();}
+function navRosario(delta){rosarioIdx=Math.max(0,Math.min(rosarioPasos.length-1,rosarioIdx+delta));renderPasoRosario();}
+
+function renderPasoRosario(){
+  const paso=rosarioPasos[rosarioIdx];
+  if(!paso)return;
+
+  const decadas=document.getElementById('rosarioDecadas');
+  if(decadas){
+    let dots='';
+    for(let i=1;i<=5;i++){
+      const cls=paso.decada>i?'decada-dot completa':(paso.decada===i?'decada-dot activa':'decada-dot');
+      dots+='<span class="'+cls+'">'+i+'</span>';
+    }
+    decadas.innerHTML=dots;
+  }
+
+  const cuentas=document.getElementById('rosarioCuentas');
+  if(cuentas){
+    const sinCuentas=paso.tipo==='cruz'||paso.tipo==='credo'||paso.tipo==='misterio'||paso.tipo==='final';
+    if(sinCuentas){
+      cuentas.innerHTML='';
+      cuentas.classList.remove('sellado');
+    }else{
+      const total=paso.decada===0?3:10;
+      let lleno=0;
+      if(paso.tipo==='chica')lleno=paso.n;
+      else if(paso.tipo==='gloria')lleno=total;
+      else lleno=0;
+      let dots='';
+      for(let i=1;i<=total;i++){dots+='<span class="cuenta-dot'+(i<=lleno?' llena':'')+'"></span>';}
+      cuentas.innerHTML=dots;
+      cuentas.classList.toggle('sellado',paso.tipo==='gloria');
+    }
+  }
+
+  const el=document.getElementById('rosarioPaso');
+  if(el){
+    let eyebrow='';
+    if(paso.decada>=1&&paso.decada<=5)eyebrow='Decena '+paso.decada+' de 5';
+    else if(paso.decada===0)eyebrow='Comienzo';
+    else eyebrow='Final';
+    if(paso.tipo==='gloria')eyebrow+=' · ¡Cuentas completas!';
+    let cuerpo;
+    if(paso.tipo==='misterio'){
+      cuerpo='<p class="rosario-paso-texto rosario-misterio">'+paso.misterio+'</p><p class="rosario-paso-hint">Meditá este misterio y rezá un Padre Nuestro.</p>';
+    }else{
+      cuerpo='<p class="rosario-paso-texto">'+textoOracion(paso.oracionT).replace(/\n/g,'<br>')+'</p>';
+    }
+    el.innerHTML='<div class="rosario-paso-eyebrow">'+eyebrow+' · Paso '+(rosarioIdx+1)+' de '+rosarioPasos.length+'</div>'
+      +'<h4 class="rosario-paso-titulo">'+paso.titulo+'</h4>'
+      +cuerpo;
+  }
+
+  const prev=document.getElementById('rosPrev'),next=document.getElementById('rosNext');
+  if(prev)prev.disabled=rosarioIdx===0;
+  if(next)next.disabled=rosarioIdx===rosarioPasos.length-1;
+}
 function renderSantosGaleria(){
   const g=document.getElementById('santosGaleria');
   if(!g)return;
@@ -235,7 +369,7 @@ function initScrollSpy(){
   },{root:main,rootMargin:'-35% 0px -55% 0px',threshold:0});
   secs.forEach(s=>obs.observe(s));
 }
-renderVersiculos();sc();renderHoyLiturgico();renderLiturgia();renderOraciones();renderSantosGaleria();renderSantos();renderSalmos();initScrollSpy();initPuertas();
+renderVersiculos();sc();renderHoyLiturgico();renderLiturgia();renderOraciones();renderRosarioHoy();renderRosarioChips();renderPasoRosario();renderSantosGaleria();renderSantos();renderSalmos();initScrollSpy();initPuertas();
 
 let resizeTimer;
 window.addEventListener('resize',()=>{
@@ -274,6 +408,9 @@ window.renderLiturgia=renderLiturgia;
 window.tog=tog;
 window.renderOraciones=renderOraciones;
 window.togO=togO;
+window.iniciarRosario=iniciarRosario;
+window.reiniciarRosario=reiniciarRosario;
+window.navRosario=navRosario;
 window.renderSantos=renderSantos;
 window.togM=togM;
 window.renderSalmos=renderSalmos;
