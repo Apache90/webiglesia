@@ -341,9 +341,9 @@ function actualizarCadenaEstado(){
   const cuentas=el.querySelectorAll('.cadena-cuenta');
   cuentas.forEach(c=>{
     const min=Number(c.dataset.min),max=Number(c.dataset.max);
-    const enRefuerzo=c.dataset.refuerzo&&Number(c.dataset.refuerzo)===decadaActual;
+    const enRefuerzo=!!(c.dataset.refuerzo&&Number(c.dataset.refuerzo)===decadaActual);
     c.classList.toggle('completa',rosarioIdx>max&&!enRefuerzo);
-    c.classList.toggle('activa',(rosarioIdx>=min&&rosarioIdx<=max)||enRefuerzo);
+    c.classList.toggle('activa',!!((rosarioIdx>=min&&rosarioIdx<=max)||enRefuerzo));
   });
   const activo=el.querySelector('.activa');
   if(activo)activo.scrollIntoView({behavior:'smooth',block:'nearest',inline:'center'});
