@@ -184,10 +184,6 @@ button{font:inherit;-webkit-tap-highlight-color:transparent;-webkit-user-select:
 .cadena-cuenta:focus-visible{outline:2px solid var(--gold);outline-offset:2px;}
 .cadena-chica{width:10px;height:10px;}
 .cadena-grande{width:15px;height:15px;}
-.cadena-gloria{width:10px;height:10px;border-color:var(--gold3);}
-.cadena-fatima{width:8px;height:8px;}
-.cadena-especial{width:13px;height:13px;border-radius:4px;}
-.cadena-misterio{width:12px;height:12px;border-color:var(--gold);}
 .cadena-cuenta.completa{background:var(--gold);border-color:var(--gold);box-shadow:0 0 2px rgba(201,168,76,.5);}
 .cadena-cuenta.activa{background:var(--gold3);border-color:var(--gold3);box-shadow:0 0 10px rgba(201,168,76,.85);}
 .cadena-cuenta.activa:not(.cadena-cruz){width:16px;height:16px;}

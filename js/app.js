@@ -264,7 +264,7 @@ function reiniciarRosario(){rosarioIdx=0;renderPasoRosario();}
 function navRosario(delta){rosarioIdx=Math.max(0,Math.min(rosarioPasos.length-1,rosarioIdx+delta));renderPasoRosario();}
 function irAPasoRosario(i){rosarioIdx=Math.max(0,Math.min(rosarioPasos.length-1,i));renderPasoRosario();}
 
-const CADENA_CLASE={cruz:'cadena-cruz',final:'cadena-especial',grande:'cadena-grande',chica:'cadena-chica',gloria:'cadena-gloria',fatima:'cadena-fatima',ofrecimiento:'cadena-especial',credo:'cadena-especial',misterio:'cadena-misterio',oracionFinal:'cadena-especial',cruzFinal:'cadena-especial'};
+const CADENA_CLASE={cruz:'cadena-cruz',grande:'cadena-grande',chica:'cadena-chica'};
 function claseCuenta(p){return p.grande?'cadena-grande':CADENA_CLASE[p.tipo];}
 function cuentaHTML(grupo,esEslabonCola){
   const ordenado=grupo.slice().sort((a,b)=>a.i-b.i);
