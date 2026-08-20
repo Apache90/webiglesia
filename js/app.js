@@ -255,14 +255,25 @@ function navRosario(delta){rosarioIdx=Math.max(0,Math.min(rosarioPasos.length-1,
 function irAPasoRosario(i){rosarioIdx=Math.max(0,Math.min(rosarioPasos.length-1,i));renderPasoRosario();}
 
 const CADENA_CLASE={cruz:'cadena-cruz',final:'cadena-cruz',grande:'cadena-grande',chica:'cadena-chica',gloria:'cadena-gloria',fatima:'cadena-fatima',pesame:'cadena-especial',credo:'cadena-especial',misterio:'cadena-especial',intenciones:'cadena-especial'};
+function etiquetaGrupoCadena(decada){
+  if(decada===0)return'Inicio';
+  if(decada===6)return'Cierre';
+  return'Decena '+decada;
+}
 function renderRosarioCadena(){
   const el=document.getElementById('rosarioCadena');
   if(!el)return;
   let html='';
+  let grupoActual=null;
   rosarioPasos.forEach((p,i)=>{
-    const gap=(p.tipo==='fatima')?' cadena-fin-decena':'';
-    html+='<button type="button" class="cadena-cuenta '+CADENA_CLASE[p.tipo]+gap+'" onclick="irAPasoRosario('+i+')" title="Paso '+(i+1)+': '+p.titulo+'" aria-label="Paso '+(i+1)+' de '+rosarioPasos.length+': '+p.titulo+'"></button>';
+    if(p.decada!==grupoActual){
+      if(grupoActual!==null)html+='</div></div>';
+      grupoActual=p.decada;
+      html+='<div class="cadena-grupo"><div class="cadena-grupo-label">'+etiquetaGrupoCadena(grupoActual)+'</div><div class="cadena-fila">';
+    }
+    html+='<button type="button" class="cadena-cuenta '+CADENA_CLASE[p.tipo]+'" onclick="irAPasoRosario('+i+')" title="Paso '+(i+1)+': '+p.titulo+'" aria-label="Paso '+(i+1)+' de '+rosarioPasos.length+': '+p.titulo+'"></button>';
   });
+  html+='</div></div>';
   el.innerHTML=html;
   actualizarCadenaEstado();
 }

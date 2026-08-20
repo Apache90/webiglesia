@@ -173,19 +173,23 @@ button{font:inherit;-webkit-tap-highlight-color:transparent;-webkit-user-select:
 .rosario-cuentas.sellado .cuenta-dot.llena:nth-child(9){animation-delay:280ms;}
 .rosario-cuentas.sellado .cuenta-dot.llena:nth-child(10){animation-delay:315ms;}
 @keyframes cuentaSello{0%{box-shadow:0 0 6px rgba(201,168,76,.6);transform:scale(1);}45%{box-shadow:0 0 16px 4px rgba(201,168,76,.95);transform:scale(1.35);}100%{box-shadow:0 0 6px rgba(201,168,76,.6);transform:scale(1);}}
-.rosario-cadena{display:flex;flex-wrap:wrap;align-items:center;gap:5px;max-height:130px;overflow-y:auto;padding:14px 12px;margin:-4px 0 20px;border-radius:var(--radius-sm);background:var(--surface);border:1px solid var(--border);}
+.rosario-cadena{display:flex;flex-direction:column;gap:16px;padding:20px 16px;margin:-4px 0 20px;border-radius:var(--radius-sm);background:var(--surface);border:1px solid var(--border);}
+.cadena-grupo{display:flex;flex-direction:column;align-items:center;gap:8px;}
+.cadena-grupo+.cadena-grupo{padding-top:14px;border-top:1px dashed var(--border);}
+.cadena-grupo-label{font-family:var(--font-title);font-size:10.5px;font-weight:600;letter-spacing:2px;text-transform:uppercase;color:var(--text3);}
+.cadena-fila{display:flex;flex-wrap:wrap;justify-content:center;align-items:center;gap:9px 8px;max-width:340px;}
 .cadena-cuenta{flex-shrink:0;padding:0;border-radius:50%;background:var(--surface2);border:1px solid var(--border2);cursor:pointer;transition:background .2s,border-color .2s,box-shadow .2s,transform .2s;}
-.cadena-cuenta:hover{border-color:var(--gold);}
+.cadena-cuenta:hover{border-color:var(--gold);transform:scale(1.15);}
 .cadena-cuenta:focus-visible{outline:2px solid var(--gold);outline-offset:2px;}
-.cadena-chica{width:7px;height:7px;}
-.cadena-grande{width:12px;height:12px;}
-.cadena-gloria{width:8px;height:8px;border-color:var(--gold3);}
-.cadena-fatima{width:6px;height:6px;}
-.cadena-especial{width:10px;height:10px;border-radius:3px;}
-.cadena-cruz{width:14px;height:14px;border-width:2px;}
-.cadena-fin-decena{margin-right:11px;}
+.cadena-chica{width:9px;height:9px;}
+.cadena-grande{width:15px;height:15px;}
+.cadena-gloria{width:10px;height:10px;border-color:var(--gold3);}
+.cadena-fatima{width:8px;height:8px;}
+.cadena-especial{width:12px;height:12px;border-radius:4px;}
+.cadena-cruz{width:17px;height:17px;border-width:2px;}
 .cadena-cuenta.completa{background:var(--gold);border-color:var(--gold);box-shadow:0 0 4px rgba(201,168,76,.5);}
-.cadena-cuenta.activa{background:var(--gold3);border-color:var(--gold3);box-shadow:0 0 10px rgba(201,168,76,.85);transform:scale(1.5);}
+.cadena-cuenta.activa{background:var(--gold3);border-color:var(--gold3);box-shadow:0 0 10px rgba(201,168,76,.85);transform:scale(1.45);}
+.cadena-cuenta.activa:hover{transform:scale(1.45);}
 @media (prefers-reduced-motion: reduce){
   .rosario-cuentas.sellado .cuenta-dot.llena{animation:none;}
 }
