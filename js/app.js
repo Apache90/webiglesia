@@ -271,7 +271,7 @@ function grupoHTML(grupo){
   const titulos=ordenado.map(p=>p.titulo).join(' · ');
   return'<button type="button" class="cadena-cuenta '+claseCuenta(rep)+'" data-min="'+min+'" data-max="'+max+'" onclick="irAPasoRosario('+min+')" title="Pasos '+(min+1)+'-'+(max+1)+': '+titulos+'" aria-label="Pasos '+(min+1)+' a '+(max+1)+' de '+rosarioPasos.length+': '+titulos+'"></button>';
 }
-const LAZO_R_MAX=120,LAZO_R_MIN=45,LAZO_MARGEN=9,LAZO_CX=LAZO_R_MAX+LAZO_MARGEN,LAZO_CY=LAZO_R_MIN+LAZO_MARGEN,LAZO_ANCHO=LAZO_CX*2,LAZO_ALTO=LAZO_CY*2;
+const LAZO_RX=118,LAZO_RY=96,LAZO_MARGEN=9,LAZO_CX=LAZO_RX+LAZO_MARGEN,LAZO_CY=LAZO_RY+LAZO_MARGEN,LAZO_ANCHO=LAZO_CX*2,LAZO_ALTO=LAZO_CY*2;
 function renderRosarioCadena(){
   const el=document.getElementById('rosarioCadena');
   if(!el)return;
@@ -283,9 +283,8 @@ function renderRosarioCadena(){
   const pasoAngulo=340/(lazo.length-1);
   lazo.forEach((p,j)=>{
     const theta=(170-j*pasoAngulo)*Math.PI/180;
-    const r=LAZO_R_MIN+(LAZO_R_MAX-LAZO_R_MIN)*Math.abs(Math.sin(theta));
-    const x=LAZO_CX+r*Math.sin(theta);
-    const y=LAZO_CY-r*Math.cos(theta);
+    const x=LAZO_CX+LAZO_RX*Math.sin(theta);
+    const y=LAZO_CY-LAZO_RY*Math.cos(theta);
     lazoHTML+='<span class="cadena-punto" style="left:'+x.toFixed(1)+'px;top:'+y.toFixed(1)+'px">'+cuentaHTML(p,p.i)+'</span>';
   });
 

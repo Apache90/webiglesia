@@ -192,7 +192,7 @@ button{font:inherit;-webkit-tap-highlight-color:transparent;-webkit-user-select:
 .cadena-cuenta.completa{background:var(--gold);border-color:var(--gold);box-shadow:0 0 4px rgba(201,168,76,.5);}
 .cadena-cuenta.activa{background:var(--gold3);border-color:var(--gold3);box-shadow:0 0 10px rgba(201,168,76,.85);}
 .cadena-cuenta.activa:not(.cadena-cruz){width:16px;height:16px;}
-.cadena-cruz{position:relative;width:24px;height:34px;border-radius:0;background:none;border:none;}
+.cadena-cuenta.cadena-cruz{position:relative;width:24px;height:34px;border-radius:0;background:none;border:none;}
 .cadena-cruz::before,.cadena-cruz::after{content:'';position:absolute;background:var(--text3);transition:background .2s;}
 .cadena-cruz::before{left:50%;top:0;width:4px;height:100%;transform:translateX(-50%);border-radius:2px;}
 .cadena-cruz::after{left:50%;top:24%;width:15px;height:4px;transform:translateX(-50%);border-radius:2px;}
