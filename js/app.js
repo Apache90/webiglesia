@@ -285,7 +285,7 @@ function agruparPorCuenta(pasos){
   return Array.from(grupos.values());
 }
 const LAZO_RX=92,LAZO_RY=130,LAZO_MARGEN=9,LAZO_CX=LAZO_RX+LAZO_MARGEN,LAZO_CY=LAZO_RY+LAZO_MARGEN,LAZO_ANCHO=LAZO_CX*2,LAZO_ALTO=LAZO_CY*2;
-const LAZO_ANGULO_INICIO=170,LAZO_ARCO=340;
+const LAZO_ANGULO_INICIO=180,LAZO_ARCO=350;
 function puntosEquidistantes(n,rx,ry,anguloInicioDeg,arcoDeg){
   const muestras=720;
   const pts=[],acumulado=[0];
@@ -330,7 +330,6 @@ function renderRosarioCadena(){
     +'<div class="rosario-centro" aria-hidden="true">✝</div>'
     +lazoHTML
     +'</div>'
-    +'<div class="rosario-medalla" title="Medalla central"></div>'
     +'<div class="rosario-cola">'+colaHTML+'</div>'
     +'</div>';
   actualizarCadenaEstado();
