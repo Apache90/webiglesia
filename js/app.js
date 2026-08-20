@@ -254,34 +254,40 @@ function reiniciarRosario(){rosarioIdx=0;renderPasoRosario();}
 function navRosario(delta){rosarioIdx=Math.max(0,Math.min(rosarioPasos.length-1,rosarioIdx+delta));renderPasoRosario();}
 function irAPasoRosario(i){rosarioIdx=Math.max(0,Math.min(rosarioPasos.length-1,i));renderPasoRosario();}
 
-const CADENA_CLASE={cruz:'cadena-cruz',final:'cadena-cruz',grande:'cadena-grande',chica:'cadena-chica',gloria:'cadena-gloria',fatima:'cadena-fatima',pesame:'cadena-especial',credo:'cadena-especial',misterio:'cadena-especial',intenciones:'cadena-especial'};
-function etiquetaGrupoCadena(decada){
-  if(decada===0)return'Inicio';
-  if(decada===6)return'Cierre';
-  return'Decena '+decada;
+const CADENA_CLASE={cruz:'cadena-cruz',final:'cadena-especial',grande:'cadena-grande',chica:'cadena-chica',gloria:'cadena-gloria',fatima:'cadena-fatima',pesame:'cadena-especial',credo:'cadena-especial',misterio:'cadena-misterio',intenciones:'cadena-especial'};
+function cuentaHTML(p,i){
+  return'<button type="button" class="cadena-cuenta '+CADENA_CLASE[p.tipo]+'" data-idx="'+i+'" onclick="irAPasoRosario('+i+')" title="Paso '+(i+1)+': '+p.titulo+'" aria-label="Paso '+(i+1)+' de '+rosarioPasos.length+': '+p.titulo+'"></button>';
 }
 function renderRosarioCadena(){
   const el=document.getElementById('rosarioCadena');
   if(!el)return;
-  let html='';
-  let grupoActual=null;
-  rosarioPasos.forEach((p,i)=>{
-    if(p.decada!==grupoActual){
-      if(grupoActual!==null)html+='</div></div>';
-      grupoActual=p.decada;
-      html+='<div class="cadena-grupo"><div class="cadena-grupo-label">'+etiquetaGrupoCadena(grupoActual)+'</div><div class="cadena-fila">';
-    }
-    html+='<button type="button" class="cadena-cuenta '+CADENA_CLASE[p.tipo]+'" onclick="irAPasoRosario('+i+')" title="Paso '+(i+1)+': '+p.titulo+'" aria-label="Paso '+(i+1)+' de '+rosarioPasos.length+': '+p.titulo+'"></button>';
+  const conIndice=rosarioPasos.map((p,i)=>Object.assign({},p,{i:i}));
+  const lazo=conIndice.filter(p=>p.decada>=1&&p.decada<=5);
+  const cola=conIndice.filter(p=>p.decada===0||p.decada===6).reverse();
+
+  let lazoHTML='';
+  const pasoAngulo=340/(lazo.length-1);
+  lazo.forEach((p,j)=>{
+    lazoHTML+='<span class="cadena-punto" style="--i:'+j+';--paso-angulo:'+pasoAngulo+'deg">'+cuentaHTML(p,p.i)+'</span>';
   });
-  html+='</div></div>';
-  el.innerHTML=html;
+
+  let colaHTML='';
+  cola.forEach(p=>{colaHTML+=cuentaHTML(p,p.i);});
+
+  el.innerHTML=
+    '<div class="rosario-forma">'
+    +'<div class="rosario-lazo">'+lazoHTML+'</div>'
+    +'<div class="rosario-medalla" title="Medalla central"></div>'
+    +'<div class="rosario-cola">'+colaHTML+'</div>'
+    +'</div>';
   actualizarCadenaEstado();
 }
 function actualizarCadenaEstado(){
   const el=document.getElementById('rosarioCadena');
   if(!el)return;
   const cuentas=el.querySelectorAll('.cadena-cuenta');
-  cuentas.forEach((c,i)=>{
+  cuentas.forEach(c=>{
+    const i=Number(c.dataset.idx);
     c.classList.toggle('completa',i<rosarioIdx);
     c.classList.toggle('activa',i===rosarioIdx);
   });
