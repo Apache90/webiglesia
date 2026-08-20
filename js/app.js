@@ -258,6 +258,7 @@ const CADENA_CLASE={cruz:'cadena-cruz',final:'cadena-especial',grande:'cadena-gr
 function cuentaHTML(p,i){
   return'<button type="button" class="cadena-cuenta '+CADENA_CLASE[p.tipo]+'" data-idx="'+i+'" onclick="irAPasoRosario('+i+')" title="Paso '+(i+1)+': '+p.titulo+'" aria-label="Paso '+(i+1)+' de '+rosarioPasos.length+': '+p.titulo+'"></button>';
 }
+const LAZO_R_MAX=120,LAZO_R_MIN=45,LAZO_MARGEN=9,LAZO_CX=LAZO_R_MAX+LAZO_MARGEN,LAZO_CY=LAZO_R_MIN+LAZO_MARGEN,LAZO_ANCHO=LAZO_CX*2,LAZO_ALTO=LAZO_CY*2;
 function renderRosarioCadena(){
   const el=document.getElementById('rosarioCadena');
   if(!el)return;
@@ -268,7 +269,11 @@ function renderRosarioCadena(){
   let lazoHTML='';
   const pasoAngulo=340/(lazo.length-1);
   lazo.forEach((p,j)=>{
-    lazoHTML+='<span class="cadena-punto" style="--i:'+j+';--paso-angulo:'+pasoAngulo+'deg">'+cuentaHTML(p,p.i)+'</span>';
+    const theta=(170-j*pasoAngulo)*Math.PI/180;
+    const r=LAZO_R_MIN+(LAZO_R_MAX-LAZO_R_MIN)*Math.abs(Math.sin(theta));
+    const x=LAZO_CX+r*Math.sin(theta);
+    const y=LAZO_CY-r*Math.cos(theta);
+    lazoHTML+='<span class="cadena-punto" style="left:'+x.toFixed(1)+'px;top:'+y.toFixed(1)+'px">'+cuentaHTML(p,p.i)+'</span>';
   });
 
   let colaHTML='';
@@ -276,7 +281,10 @@ function renderRosarioCadena(){
 
   el.innerHTML=
     '<div class="rosario-forma">'
-    +'<div class="rosario-lazo">'+lazoHTML+'</div>'
+    +'<div class="rosario-lazo" style="width:'+LAZO_ANCHO+'px;height:'+LAZO_ALTO+'px">'
+    +'<div class="rosario-centro" aria-hidden="true">✝</div>'
+    +lazoHTML
+    +'</div>'
     +'<div class="rosario-medalla" title="Medalla central"></div>'
     +'<div class="rosario-cola">'+colaHTML+'</div>'
     +'</div>';
