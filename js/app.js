@@ -196,6 +196,7 @@ function generarPasosRosario(clave){
     pasos.push({tipo:'grande',decada:dec,titulo:'Padre Nuestro',oracionT:'Padre Nuestro'});
     for(let n=1;n<=10;n++){pasos.push({tipo:'chica',decada:dec,n:n,total:10,titulo:'Ave María '+n+' de 10',oracionT:'Ave María'});}
     pasos.push({tipo:'gloria',decada:dec,titulo:'Gloria',oracionT:'Gloria al Padre'});
+    pasos.push({tipo:'fatima',decada:dec,titulo:'Oh Jesús mío',oracionT:'Oh Jesús mío'});
   }
   pasos.push({tipo:'final',decada:6,titulo:'Salve',oracionT:'Salve Regina'});
   return pasos;
@@ -265,7 +266,7 @@ function renderPasoRosario(){
 
   const cuentas=document.getElementById('rosarioCuentas');
   if(cuentas){
-    const sinCuentas=paso.tipo==='cruz'||paso.tipo==='credo'||paso.tipo==='misterio'||paso.tipo==='final';
+    const sinCuentas=paso.tipo==='cruz'||paso.tipo==='credo'||paso.tipo==='misterio'||paso.tipo==='final'||paso.tipo==='fatima';
     if(sinCuentas){
       cuentas.innerHTML='';
       cuentas.classList.remove('sellado');
