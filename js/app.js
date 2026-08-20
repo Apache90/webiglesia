@@ -184,27 +184,27 @@ function textoOracion(titulo){const o=ORACIONES.find(x=>x.t===titulo);return o?o
 function generarPasosRosario(clave){
   const m=MISTERIOS_ROSARIO[clave];
   const pasos=[];
-  pasos.push({tipo:'cruz',decada:0,bead:'cruzInicial',titulo:'Señal de la Cruz',oracionT:'Señal de la Cruz'});
-  pasos.push({tipo:'ofrecimiento',decada:0,bead:'cruzInicial',titulo:'Ofrecimiento del Rosario',oracionT:'Ofrecimiento del Rosario'});
-  pasos.push({tipo:'credo',decada:0,bead:'cruzInicial',titulo:'Credo',oracionT:'Credo Apostólico'});
-  pasos.push({tipo:'grande',decada:0,titulo:'Padre Nuestro',oracionT:'Padre Nuestro'});
+  pasos.push({tipo:'cruz',decada:0,bead:'cruz-inicial',titulo:'Señal de la Cruz',oracionT:'Señal de la Cruz'});
+  pasos.push({tipo:'ofrecimiento',decada:0,bead:'cruz-inicial',titulo:'Ofrecimiento del Rosario',oracionT:'Ofrecimiento del Rosario'});
+  pasos.push({tipo:'credo',decada:0,bead:'cruz-inicial',titulo:'Credo',oracionT:'Credo Apostólico'});
+  pasos.push({tipo:'grande',decada:0,bead:'pn-inicial',titulo:'Padre Nuestro',oracionT:'Padre Nuestro'});
   const virtudes=['por la Fe','por la Esperanza','por la Caridad'];
-  for(let n=1;n<=3;n++){pasos.push({tipo:'chica',decada:0,n:n,total:3,titulo:'Ave María '+n+' de 3 — '+virtudes[n-1],oracionT:'Ave María'});}
-  pasos.push({tipo:'gloria',decada:0,grande:true,titulo:'Gloria',oracionT:'Gloria al Padre'});
+  for(let n=1;n<=3;n++){pasos.push({tipo:'chica',decada:0,n:n,total:3,bead:'am-inicial-'+n,titulo:'Ave María '+n+' de 3 — '+virtudes[n-1],oracionT:'Ave María'});}
+  pasos.push({tipo:'gloria',decada:0,grande:true,bead:'gloria-inicial',titulo:'Gloria',oracionT:'Gloria al Padre'});
   for(let d=0;d<5;d++){
     const dec=d+1;
-    pasos.push({tipo:'misterio',decada:dec,numero:dec,titulo:NUMEROS_ORDINALES[d]+' Misterio '+m.nombre,misterio:m.lista[d]});
-    pasos.push({tipo:'grande',decada:dec,titulo:'Padre Nuestro',oracionT:'Padre Nuestro'});
-    for(let n=1;n<=10;n++){pasos.push({tipo:'chica',decada:dec,n:n,total:10,titulo:'Ave María '+n+' de 10',oracionT:'Ave María'});}
-    pasos.push({tipo:'gloria',decada:dec,titulo:'Gloria',oracionT:'Gloria al Padre'});
-    pasos.push({tipo:'fatima',decada:dec,titulo:'Oh Jesús mío',oracionT:'Oh Jesús mío'});
+    pasos.push({tipo:'misterio',decada:dec,numero:dec,bead:'misterio'+dec,titulo:NUMEROS_ORDINALES[d]+' Misterio '+m.nombre,misterio:m.lista[d]});
+    pasos.push({tipo:'grande',decada:dec,bead:'pn'+dec,titulo:'Padre Nuestro',oracionT:'Padre Nuestro'});
+    for(let n=1;n<=10;n++){pasos.push({tipo:'chica',decada:dec,n:n,total:10,bead:'am'+dec+'-'+n,titulo:'Ave María '+n+' de 10',oracionT:'Ave María'});}
+    pasos.push({tipo:'gloria',decada:dec,bead:'gloria'+dec,titulo:'Gloria',oracionT:'Gloria al Padre'});
+    pasos.push({tipo:'fatima',decada:dec,bead:'fatima'+dec,titulo:'Oh Jesús mío',oracionT:'Oh Jesús mío'});
   }
-  pasos.push({tipo:'grande',decada:6,titulo:'Por las intenciones del Papa — Padre Nuestro',oracionT:'Padre Nuestro'});
-  pasos.push({tipo:'chica',decada:6,n:1,total:1,titulo:'Por las intenciones del Papa — Ave María',oracionT:'Ave María'});
-  pasos.push({tipo:'gloria',decada:6,titulo:'Por las intenciones del Papa — Gloria',oracionT:'Gloria al Padre'});
-  pasos.push({tipo:'final',decada:6,titulo:'Salve',oracionT:'Salve Regina'});
-  pasos.push({tipo:'oracionFinal',decada:6,titulo:'Oración final',oracionT:'Oración final'});
-  pasos.push({tipo:'cruzFinal',decada:6,titulo:'Señal de la Cruz',oracionT:'Señal de la Cruz'});
+  pasos.push({tipo:'grande',decada:6,bead:'papa-pn',titulo:'Por las intenciones del Papa — Padre Nuestro',oracionT:'Padre Nuestro'});
+  pasos.push({tipo:'chica',decada:6,n:1,total:1,bead:'papa-am',titulo:'Por las intenciones del Papa — Ave María',oracionT:'Ave María'});
+  pasos.push({tipo:'gloria',decada:6,bead:'papa-gloria',titulo:'Por las intenciones del Papa — Gloria',oracionT:'Gloria al Padre'});
+  pasos.push({tipo:'final',decada:6,bead:'salve',titulo:'Salve',oracionT:'Salve Regina'});
+  pasos.push({tipo:'oracionFinal',decada:6,bead:'oracion-final',titulo:'Oración final',oracionT:'Oración final'});
+  pasos.push({tipo:'cruzFinal',decada:6,bead:'cruz-final',titulo:'Señal de la Cruz',oracionT:'Señal de la Cruz'});
   return pasos;
 }
 
@@ -260,16 +260,22 @@ function irAPasoRosario(i){rosarioIdx=Math.max(0,Math.min(rosarioPasos.length-1,
 
 const CADENA_CLASE={cruz:'cadena-cruz',final:'cadena-especial',grande:'cadena-grande',chica:'cadena-chica',gloria:'cadena-gloria',fatima:'cadena-fatima',ofrecimiento:'cadena-especial',credo:'cadena-especial',misterio:'cadena-misterio',oracionFinal:'cadena-especial',cruzFinal:'cadena-especial'};
 function claseCuenta(p){return p.grande?'cadena-grande':CADENA_CLASE[p.tipo];}
-function cuentaHTML(p,i){
-  return'<button type="button" class="cadena-cuenta '+claseCuenta(p)+'" data-min="'+i+'" data-max="'+i+'" onclick="irAPasoRosario('+i+')" title="Paso '+(i+1)+': '+p.titulo+'" aria-label="Paso '+(i+1)+' de '+rosarioPasos.length+': '+p.titulo+'"></button>';
-}
-function grupoHTML(grupo){
-  if(grupo.length===1)return cuentaHTML(grupo[0],grupo[0].i);
+function cuentaHTML(grupo){
   const ordenado=grupo.slice().sort((a,b)=>a.i-b.i);
   const min=ordenado[0].i,max=ordenado[ordenado.length-1].i;
   const rep=ordenado.find(p=>p.tipo==='cruz'||p.tipo==='cruzFinal')||ordenado[0];
   const titulos=ordenado.map(p=>p.titulo).join(' · ');
-  return'<button type="button" class="cadena-cuenta '+claseCuenta(rep)+'" data-min="'+min+'" data-max="'+max+'" onclick="irAPasoRosario('+min+')" title="Pasos '+(min+1)+'-'+(max+1)+': '+titulos+'" aria-label="Pasos '+(min+1)+' a '+(max+1)+' de '+rosarioPasos.length+': '+titulos+'"></button>';
+  const etiqueta=(min===max?'Paso '+(min+1):'Pasos '+(min+1)+'-'+(max+1))+': '+titulos;
+  return'<button type="button" class="cadena-cuenta '+claseCuenta(rep)+'" data-min="'+min+'" data-max="'+max+'" onclick="irAPasoRosario('+min+')" title="'+etiqueta+'" aria-label="'+etiqueta+' — '+rosarioPasos.length+' pasos en total"></button>';
+}
+function agruparPorCuenta(pasos){
+  const grupos=new Map();
+  pasos.forEach(p=>{
+    const clave=p.bead||('paso'+p.i);
+    if(!grupos.has(clave))grupos.set(clave,[]);
+    grupos.get(clave).push(p);
+  });
+  return Array.from(grupos.values());
 }
 const LAZO_RX=118,LAZO_RY=96,LAZO_MARGEN=9,LAZO_CX=LAZO_RX+LAZO_MARGEN,LAZO_CY=LAZO_RY+LAZO_MARGEN,LAZO_ANCHO=LAZO_CX*2,LAZO_ALTO=LAZO_CY*2;
 function renderRosarioCadena(){
@@ -285,17 +291,11 @@ function renderRosarioCadena(){
     const theta=(170-j*pasoAngulo)*Math.PI/180;
     const x=LAZO_CX+LAZO_RX*Math.sin(theta);
     const y=LAZO_CY-LAZO_RY*Math.cos(theta);
-    lazoHTML+='<span class="cadena-punto" style="left:'+x.toFixed(1)+'px;top:'+y.toFixed(1)+'px">'+cuentaHTML(p,p.i)+'</span>';
+    lazoHTML+='<span class="cadena-punto" style="left:'+x.toFixed(1)+'px;top:'+y.toFixed(1)+'px">'+cuentaHTML([p])+'</span>';
   });
 
   let colaHTML='';
-  let j=0;
-  while(j<cola.length){
-    const grupo=[cola[j]];
-    while(cola[j].bead&&cola[j+1]&&cola[j+1].bead===cola[j].bead){j++;grupo.push(cola[j]);}
-    colaHTML+=grupoHTML(grupo);
-    j++;
-  }
+  agruparPorCuenta(cola).forEach(grupo=>{colaHTML+=cuentaHTML(grupo);});
 
   el.innerHTML=
     '<div class="rosario-forma">'

@@ -179,17 +179,17 @@ button{font:inherit;-webkit-tap-highlight-color:transparent;-webkit-user-select:
 .rosario-centro{position:absolute;top:50%;left:50%;transform:translate(-50%,-50%);width:56px;height:56px;border-radius:50%;display:flex;align-items:center;justify-content:center;color:var(--gold);font-size:20px;opacity:.5;background:radial-gradient(circle,rgba(201,168,76,.1),transparent 70%);border:1px solid var(--border);}
 .cadena-punto{position:absolute;transform:translate(-50%,-50%);}
 .rosario-medalla{width:13px;height:17px;margin-top:-9px;background:var(--surface2);border:1px solid var(--gold2);border-radius:50% 50% 50% 50% / 60% 60% 40% 40%;box-shadow:0 0 6px rgba(201,168,76,.35);}
-.rosario-cola{display:flex;flex-direction:column;align-items:center;gap:10px;margin-top:6px;}
+.rosario-cola{display:flex;flex-direction:column;align-items:center;gap:14px;margin-top:8px;}
 .cadena-cuenta{flex-shrink:0;padding:0;border-radius:50%;background:var(--surface2);border:1px solid var(--border2);cursor:pointer;transition:background .2s,border-color .2s,box-shadow .2s,width .2s,height .2s;}
 .cadena-cuenta:hover{border-color:var(--gold);}
 .cadena-cuenta:focus-visible{outline:2px solid var(--gold);outline-offset:2px;}
-.cadena-chica{width:8px;height:8px;}
-.cadena-grande{width:13px;height:13px;}
-.cadena-gloria{width:9px;height:9px;border-color:var(--gold3);}
-.cadena-fatima{width:7px;height:7px;}
-.cadena-especial{width:12px;height:12px;border-radius:4px;}
-.cadena-misterio{width:11px;height:11px;border-color:var(--gold);}
-.cadena-cuenta.completa{background:var(--gold);border-color:var(--gold);box-shadow:0 0 4px rgba(201,168,76,.5);}
+.cadena-chica{width:10px;height:10px;}
+.cadena-grande{width:15px;height:15px;}
+.cadena-gloria{width:10px;height:10px;border-color:var(--gold3);}
+.cadena-fatima{width:8px;height:8px;}
+.cadena-especial{width:13px;height:13px;border-radius:4px;}
+.cadena-misterio{width:12px;height:12px;border-color:var(--gold);}
+.cadena-cuenta.completa{background:var(--gold);border-color:var(--gold);box-shadow:0 0 2px rgba(201,168,76,.5);}
 .cadena-cuenta.activa{background:var(--gold3);border-color:var(--gold3);box-shadow:0 0 10px rgba(201,168,76,.85);}
 .cadena-cuenta.activa:not(.cadena-cruz){width:16px;height:16px;}
 .cadena-cuenta.cadena-cruz{position:relative;width:24px;height:34px;border-radius:0;background:none;border:none;}
