@@ -184,13 +184,13 @@ function textoOracion(titulo){const o=ORACIONES.find(x=>x.t===titulo);return o?o
 function generarPasosRosario(clave){
   const m=MISTERIOS_ROSARIO[clave];
   const pasos=[];
-  pasos.push({tipo:'cruz',decada:0,titulo:'Señal de la Cruz',oracionT:'Señal de la Cruz'});
-  pasos.push({tipo:'ofrecimiento',decada:0,titulo:'Ofrecimiento del Rosario',oracionT:'Ofrecimiento del Rosario'});
-  pasos.push({tipo:'credo',decada:0,titulo:'Credo',oracionT:'Credo Apostólico'});
+  pasos.push({tipo:'cruz',decada:0,bead:'cruzInicial',titulo:'Señal de la Cruz',oracionT:'Señal de la Cruz'});
+  pasos.push({tipo:'ofrecimiento',decada:0,bead:'cruzInicial',titulo:'Ofrecimiento del Rosario',oracionT:'Ofrecimiento del Rosario'});
+  pasos.push({tipo:'credo',decada:0,bead:'cruzInicial',titulo:'Credo',oracionT:'Credo Apostólico'});
   pasos.push({tipo:'grande',decada:0,titulo:'Padre Nuestro',oracionT:'Padre Nuestro'});
   const virtudes=['por la Fe','por la Esperanza','por la Caridad'];
   for(let n=1;n<=3;n++){pasos.push({tipo:'chica',decada:0,n:n,total:3,titulo:'Ave María '+n+' de 3 — '+virtudes[n-1],oracionT:'Ave María'});}
-  pasos.push({tipo:'gloria',decada:0,titulo:'Gloria',oracionT:'Gloria al Padre'});
+  pasos.push({tipo:'gloria',decada:0,grande:true,titulo:'Gloria',oracionT:'Gloria al Padre'});
   for(let d=0;d<5;d++){
     const dec=d+1;
     pasos.push({tipo:'misterio',decada:dec,numero:dec,titulo:NUMEROS_ORDINALES[d]+' Misterio '+m.nombre,misterio:m.lista[d]});
@@ -259,8 +259,17 @@ function navRosario(delta){rosarioIdx=Math.max(0,Math.min(rosarioPasos.length-1,
 function irAPasoRosario(i){rosarioIdx=Math.max(0,Math.min(rosarioPasos.length-1,i));renderPasoRosario();}
 
 const CADENA_CLASE={cruz:'cadena-cruz',final:'cadena-especial',grande:'cadena-grande',chica:'cadena-chica',gloria:'cadena-gloria',fatima:'cadena-fatima',ofrecimiento:'cadena-especial',credo:'cadena-especial',misterio:'cadena-misterio',oracionFinal:'cadena-especial',cruzFinal:'cadena-especial'};
+function claseCuenta(p){return p.grande?'cadena-grande':CADENA_CLASE[p.tipo];}
 function cuentaHTML(p,i){
-  return'<button type="button" class="cadena-cuenta '+CADENA_CLASE[p.tipo]+'" data-idx="'+i+'" onclick="irAPasoRosario('+i+')" title="Paso '+(i+1)+': '+p.titulo+'" aria-label="Paso '+(i+1)+' de '+rosarioPasos.length+': '+p.titulo+'"></button>';
+  return'<button type="button" class="cadena-cuenta '+claseCuenta(p)+'" data-min="'+i+'" data-max="'+i+'" onclick="irAPasoRosario('+i+')" title="Paso '+(i+1)+': '+p.titulo+'" aria-label="Paso '+(i+1)+' de '+rosarioPasos.length+': '+p.titulo+'"></button>';
+}
+function grupoHTML(grupo){
+  if(grupo.length===1)return cuentaHTML(grupo[0],grupo[0].i);
+  const ordenado=grupo.slice().sort((a,b)=>a.i-b.i);
+  const min=ordenado[0].i,max=ordenado[ordenado.length-1].i;
+  const rep=ordenado.find(p=>p.tipo==='cruz'||p.tipo==='cruzFinal')||ordenado[0];
+  const titulos=ordenado.map(p=>p.titulo).join(' · ');
+  return'<button type="button" class="cadena-cuenta '+claseCuenta(rep)+'" data-min="'+min+'" data-max="'+max+'" onclick="irAPasoRosario('+min+')" title="Pasos '+(min+1)+'-'+(max+1)+': '+titulos+'" aria-label="Pasos '+(min+1)+' a '+(max+1)+' de '+rosarioPasos.length+': '+titulos+'"></button>';
 }
 const LAZO_R_MAX=120,LAZO_R_MIN=45,LAZO_MARGEN=9,LAZO_CX=LAZO_R_MAX+LAZO_MARGEN,LAZO_CY=LAZO_R_MIN+LAZO_MARGEN,LAZO_ANCHO=LAZO_CX*2,LAZO_ALTO=LAZO_CY*2;
 function renderRosarioCadena(){
@@ -281,7 +290,13 @@ function renderRosarioCadena(){
   });
 
   let colaHTML='';
-  cola.forEach(p=>{colaHTML+=cuentaHTML(p,p.i);});
+  let j=0;
+  while(j<cola.length){
+    const grupo=[cola[j]];
+    while(cola[j].bead&&cola[j+1]&&cola[j+1].bead===cola[j].bead){j++;grupo.push(cola[j]);}
+    colaHTML+=grupoHTML(grupo);
+    j++;
+  }
 
   el.innerHTML=
     '<div class="rosario-forma">'
@@ -299,9 +314,9 @@ function actualizarCadenaEstado(){
   if(!el)return;
   const cuentas=el.querySelectorAll('.cadena-cuenta');
   cuentas.forEach(c=>{
-    const i=Number(c.dataset.idx);
-    c.classList.toggle('completa',i<rosarioIdx);
-    c.classList.toggle('activa',i===rosarioIdx);
+    const min=Number(c.dataset.min),max=Number(c.dataset.max);
+    c.classList.toggle('completa',rosarioIdx>max);
+    c.classList.toggle('activa',rosarioIdx>=min&&rosarioIdx<=max);
   });
   const activo=el.querySelector('.activa');
   if(activo)activo.scrollIntoView({behavior:'smooth',block:'nearest',inline:'center'});
