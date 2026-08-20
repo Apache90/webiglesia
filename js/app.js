@@ -185,7 +185,7 @@ function generarPasosRosario(clave){
   const m=MISTERIOS_ROSARIO[clave];
   const pasos=[];
   pasos.push({tipo:'cruz',decada:0,titulo:'Señal de la Cruz',oracionT:'Señal de la Cruz'});
-  pasos.push({tipo:'pesame',decada:0,titulo:'Pésame',oracionT:'Pésame'});
+  pasos.push({tipo:'ofrecimiento',decada:0,titulo:'Ofrecimiento del Rosario',oracionT:'Ofrecimiento del Rosario'});
   pasos.push({tipo:'credo',decada:0,titulo:'Credo',oracionT:'Credo Apostólico'});
   pasos.push({tipo:'grande',decada:0,titulo:'Padre Nuestro',oracionT:'Padre Nuestro'});
   const virtudes=['por la Fe','por la Esperanza','por la Caridad'];
@@ -199,8 +199,12 @@ function generarPasosRosario(clave){
     pasos.push({tipo:'gloria',decada:dec,titulo:'Gloria',oracionT:'Gloria al Padre'});
     pasos.push({tipo:'fatima',decada:dec,titulo:'Oh Jesús mío',oracionT:'Oh Jesús mío'});
   }
-  pasos.push({tipo:'intenciones',decada:6,titulo:'Intenciones'});
+  pasos.push({tipo:'grande',decada:6,titulo:'Por las intenciones del Papa — Padre Nuestro',oracionT:'Padre Nuestro'});
+  pasos.push({tipo:'chica',decada:6,n:1,total:1,titulo:'Por las intenciones del Papa — Ave María',oracionT:'Ave María'});
+  pasos.push({tipo:'gloria',decada:6,titulo:'Por las intenciones del Papa — Gloria',oracionT:'Gloria al Padre'});
   pasos.push({tipo:'final',decada:6,titulo:'Salve',oracionT:'Salve Regina'});
+  pasos.push({tipo:'oracionFinal',decada:6,titulo:'Oración final',oracionT:'Oración final'});
+  pasos.push({tipo:'cruzFinal',decada:6,titulo:'Señal de la Cruz',oracionT:'Señal de la Cruz'});
   return pasos;
 }
 
@@ -254,7 +258,7 @@ function reiniciarRosario(){rosarioIdx=0;renderPasoRosario();}
 function navRosario(delta){rosarioIdx=Math.max(0,Math.min(rosarioPasos.length-1,rosarioIdx+delta));renderPasoRosario();}
 function irAPasoRosario(i){rosarioIdx=Math.max(0,Math.min(rosarioPasos.length-1,i));renderPasoRosario();}
 
-const CADENA_CLASE={cruz:'cadena-cruz',final:'cadena-especial',grande:'cadena-grande',chica:'cadena-chica',gloria:'cadena-gloria',fatima:'cadena-fatima',pesame:'cadena-especial',credo:'cadena-especial',misterio:'cadena-misterio',intenciones:'cadena-especial'};
+const CADENA_CLASE={cruz:'cadena-cruz',final:'cadena-especial',grande:'cadena-grande',chica:'cadena-chica',gloria:'cadena-gloria',fatima:'cadena-fatima',ofrecimiento:'cadena-especial',credo:'cadena-especial',misterio:'cadena-misterio',oracionFinal:'cadena-especial',cruzFinal:'cadena-especial'};
 function cuentaHTML(p,i){
   return'<button type="button" class="cadena-cuenta '+CADENA_CLASE[p.tipo]+'" data-idx="'+i+'" onclick="irAPasoRosario('+i+')" title="Paso '+(i+1)+': '+p.titulo+'" aria-label="Paso '+(i+1)+' de '+rosarioPasos.length+': '+p.titulo+'"></button>';
 }
@@ -319,12 +323,12 @@ function renderPasoRosario(){
 
   const cuentas=document.getElementById('rosarioCuentas');
   if(cuentas){
-    const sinCuentas=paso.tipo==='cruz'||paso.tipo==='pesame'||paso.tipo==='credo'||paso.tipo==='misterio'||paso.tipo==='final'||paso.tipo==='fatima'||paso.tipo==='intenciones';
+    const sinCuentas=paso.tipo==='cruz'||paso.tipo==='ofrecimiento'||paso.tipo==='credo'||paso.tipo==='misterio'||paso.tipo==='final'||paso.tipo==='fatima'||paso.tipo==='oracionFinal'||paso.tipo==='cruzFinal';
     if(sinCuentas){
       cuentas.innerHTML='';
       cuentas.classList.remove('sellado');
     }else{
-      const total=paso.decada===0?3:10;
+      const total=paso.decada===0?3:(paso.decada===6?1:10);
       let lleno=0;
       if(paso.tipo==='chica')lleno=paso.n;
       else if(paso.tipo==='gloria')lleno=total;
@@ -346,8 +350,6 @@ function renderPasoRosario(){
     let cuerpo;
     if(paso.tipo==='misterio'){
       cuerpo='<p class="rosario-paso-texto rosario-misterio">'+paso.misterio+'</p><p class="rosario-paso-hint">Meditá este misterio y rezá un Padre Nuestro.</p>';
-    }else if(paso.tipo==='intenciones'){
-      cuerpo='<p class="rosario-paso-texto">Antes de cerrar, presentá a Dios las intenciones por las que ofrecés este Rosario: las tuyas, las de tus seres queridos, las del Papa y la Iglesia.</p><p class="rosario-paso-hint">Nombralas en silencio o en voz alta, y luego continuá con la Salve.</p>';
     }else{
       cuerpo='<p class="rosario-paso-texto">'+textoOracion(paso.oracionT).replace(/\n/g,'<br>')+'</p>';
     }
