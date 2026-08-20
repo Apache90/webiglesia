@@ -193,11 +193,17 @@ function generarPasosRosario(clave){
   pasos.push({tipo:'gloria',decada:0,grande:true,bead:'gloria-inicial',titulo:'Gloria',oracionT:'Gloria al Padre'});
   for(let d=0;d<5;d++){
     const dec=d+1;
-    pasos.push({tipo:'misterio',decada:dec,numero:dec,bead:'misterio'+dec,titulo:NUMEROS_ORDINALES[d]+' Misterio '+m.nombre,misterio:m.lista[d]});
-    pasos.push({tipo:'grande',decada:dec,bead:'pn'+dec,titulo:'Padre Nuestro',oracionT:'Padre Nuestro'});
+    const beadDecada='grande-loop-'+dec;
+    pasos.push({tipo:'misterio',decada:dec,numero:dec,grande:true,bead:beadDecada,titulo:NUMEROS_ORDINALES[d]+' Misterio '+m.nombre,misterio:m.lista[d]});
+    pasos.push({tipo:'grande',decada:dec,bead:beadDecada,titulo:'Padre Nuestro',oracionT:'Padre Nuestro'});
     for(let n=1;n<=10;n++){pasos.push({tipo:'chica',decada:dec,n:n,total:10,bead:'am'+dec+'-'+n,titulo:'Ave María '+n+' de 10',oracionT:'Ave María'});}
-    pasos.push({tipo:'gloria',decada:dec,bead:'gloria'+dec,titulo:'Gloria',oracionT:'Gloria al Padre'});
-    pasos.push({tipo:'fatima',decada:dec,bead:'fatima'+dec,titulo:'Oh Jesús mío',oracionT:'Oh Jesús mío'});
+    if(dec<5){
+      pasos.push({tipo:'gloria',decada:dec,grande:true,bead:'grande-loop-'+(dec+1),titulo:'Gloria',oracionT:'Gloria al Padre'});
+      pasos.push({tipo:'fatima',decada:dec,grande:true,bead:'grande-loop-'+(dec+1),titulo:'Oh Jesús mío',oracionT:'Oh Jesús mío'});
+    }else{
+      pasos.push({tipo:'gloria',decada:dec,sinCuenta:true,titulo:'Gloria',oracionT:'Gloria al Padre'});
+      pasos.push({tipo:'fatima',decada:dec,sinCuenta:true,titulo:'Oh Jesús mío',oracionT:'Oh Jesús mío'});
+    }
   }
   pasos.push({tipo:'grande',decada:6,bead:'papa-pn',titulo:'Por las intenciones del Papa — Padre Nuestro',oracionT:'Padre Nuestro'});
   pasos.push({tipo:'chica',decada:6,n:1,total:1,bead:'papa-am',titulo:'Por las intenciones del Papa — Ave María',oracionT:'Ave María'});
@@ -278,21 +284,41 @@ function agruparPorCuenta(pasos){
   });
   return Array.from(grupos.values());
 }
-const LAZO_RX=118,LAZO_RY=96,LAZO_MARGEN=9,LAZO_CX=LAZO_RX+LAZO_MARGEN,LAZO_CY=LAZO_RY+LAZO_MARGEN,LAZO_ANCHO=LAZO_CX*2,LAZO_ALTO=LAZO_CY*2;
+const LAZO_RX=92,LAZO_RY=130,LAZO_MARGEN=9,LAZO_CX=LAZO_RX+LAZO_MARGEN,LAZO_CY=LAZO_RY+LAZO_MARGEN,LAZO_ANCHO=LAZO_CX*2,LAZO_ALTO=LAZO_CY*2;
+const LAZO_ANGULO_INICIO=170,LAZO_ARCO=340;
+function puntosEquidistantes(n,rx,ry,anguloInicioDeg,arcoDeg){
+  const muestras=720;
+  const pts=[],acumulado=[0];
+  let prevX=null,prevY=null;
+  for(let s=0;s<=muestras;s++){
+    const t=(anguloInicioDeg-(s/muestras)*arcoDeg)*Math.PI/180;
+    const x=rx*Math.sin(t),y=-ry*Math.cos(t);
+    if(s>0){const dx=x-prevX,dy=y-prevY;acumulado.push(acumulado[s-1]+Math.sqrt(dx*dx+dy*dy));}
+    pts.push({x:x,y:y});
+    prevX=x;prevY=y;
+  }
+  const total=acumulado[acumulado.length-1];
+  const resultado=[];
+  for(let i=0;i<n;i++){
+    const objetivo=n===1?0:(i/(n-1))*total;
+    let idx=0;
+    while(idx<acumulado.length-1&&acumulado[idx+1]<objetivo)idx++;
+    resultado.push(pts[idx]);
+  }
+  return resultado;
+}
 function renderRosarioCadena(){
   const el=document.getElementById('rosarioCadena');
   if(!el)return;
   const conIndice=rosarioPasos.map((p,i)=>Object.assign({},p,{i:i}));
-  const lazo=conIndice.filter(p=>p.decada>=1&&p.decada<=5);
+  const lazo=agruparPorCuenta(conIndice.filter(p=>p.decada>=1&&p.decada<=5&&!p.sinCuenta));
   const cola=conIndice.filter(p=>p.decada===0).reverse();
 
   let lazoHTML='';
-  const pasoAngulo=340/(lazo.length-1);
-  lazo.forEach((p,j)=>{
-    const theta=(170-j*pasoAngulo)*Math.PI/180;
-    const x=LAZO_CX+LAZO_RX*Math.sin(theta);
-    const y=LAZO_CY-LAZO_RY*Math.cos(theta);
-    lazoHTML+='<span class="cadena-punto" style="left:'+x.toFixed(1)+'px;top:'+y.toFixed(1)+'px">'+cuentaHTML([p])+'</span>';
+  const puntos=puntosEquidistantes(lazo.length,LAZO_RX,LAZO_RY,LAZO_ANGULO_INICIO,LAZO_ARCO);
+  lazo.forEach((grupo,j)=>{
+    const x=LAZO_CX+puntos[j].x,y=LAZO_CY+puntos[j].y;
+    lazoHTML+='<span class="cadena-punto" style="left:'+x.toFixed(1)+'px;top:'+y.toFixed(1)+'px">'+cuentaHTML(grupo)+'</span>';
   });
 
   let colaHTML='';
