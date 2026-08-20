@@ -266,7 +266,8 @@ function cuentaHTML(grupo){
   const rep=ordenado.find(p=>p.tipo==='cruz'||p.tipo==='cruzFinal')||ordenado[0];
   const titulos=ordenado.map(p=>p.titulo).join(' · ');
   const etiqueta=(min===max?'Paso '+(min+1):'Pasos '+(min+1)+'-'+(max+1))+': '+titulos;
-  return'<button type="button" class="cadena-cuenta '+claseCuenta(rep)+'" data-min="'+min+'" data-max="'+max+'" onclick="irAPasoRosario('+min+')" title="'+etiqueta+'" aria-label="'+etiqueta+' — '+rosarioPasos.length+' pasos en total"></button>';
+  const refuerzo=rep.tipo==='cruz'?' data-refuerzo="6"':'';
+  return'<button type="button" class="cadena-cuenta '+claseCuenta(rep)+'" data-min="'+min+'" data-max="'+max+'"'+refuerzo+' onclick="irAPasoRosario('+min+')" title="'+etiqueta+'" aria-label="'+etiqueta+' — '+rosarioPasos.length+' pasos en total"></button>';
 }
 function agruparPorCuenta(pasos){
   const grupos=new Map();
@@ -311,11 +312,13 @@ function renderRosarioCadena(){
 function actualizarCadenaEstado(){
   const el=document.getElementById('rosarioCadena');
   if(!el)return;
+  const decadaActual=rosarioPasos[rosarioIdx]&&rosarioPasos[rosarioIdx].decada;
   const cuentas=el.querySelectorAll('.cadena-cuenta');
   cuentas.forEach(c=>{
     const min=Number(c.dataset.min),max=Number(c.dataset.max);
-    c.classList.toggle('completa',rosarioIdx>max);
-    c.classList.toggle('activa',rosarioIdx>=min&&rosarioIdx<=max);
+    const enRefuerzo=c.dataset.refuerzo&&Number(c.dataset.refuerzo)===decadaActual;
+    c.classList.toggle('completa',rosarioIdx>max&&!enRefuerzo);
+    c.classList.toggle('activa',(rosarioIdx>=min&&rosarioIdx<=max)||enRefuerzo);
   });
   const activo=el.querySelector('.activa');
   if(activo)activo.scrollIntoView({behavior:'smooth',block:'nearest',inline:'center'});
