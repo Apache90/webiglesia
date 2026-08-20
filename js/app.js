@@ -185,6 +185,7 @@ function generarPasosRosario(clave){
   const m=MISTERIOS_ROSARIO[clave];
   const pasos=[];
   pasos.push({tipo:'cruz',decada:0,titulo:'Señal de la Cruz',oracionT:'Señal de la Cruz'});
+  pasos.push({tipo:'pesame',decada:0,titulo:'Pésame',oracionT:'Pésame'});
   pasos.push({tipo:'credo',decada:0,titulo:'Credo',oracionT:'Credo Apostólico'});
   pasos.push({tipo:'grande',decada:0,titulo:'Padre Nuestro',oracionT:'Padre Nuestro'});
   const virtudes=['por la Fe','por la Esperanza','por la Caridad'];
@@ -198,6 +199,7 @@ function generarPasosRosario(clave){
     pasos.push({tipo:'gloria',decada:dec,titulo:'Gloria',oracionT:'Gloria al Padre'});
     pasos.push({tipo:'fatima',decada:dec,titulo:'Oh Jesús mío',oracionT:'Oh Jesús mío'});
   }
+  pasos.push({tipo:'intenciones',decada:6,titulo:'Intenciones'});
   pasos.push({tipo:'final',decada:6,titulo:'Salve',oracionT:'Salve Regina'});
   return pasos;
 }
@@ -266,7 +268,7 @@ function renderPasoRosario(){
 
   const cuentas=document.getElementById('rosarioCuentas');
   if(cuentas){
-    const sinCuentas=paso.tipo==='cruz'||paso.tipo==='credo'||paso.tipo==='misterio'||paso.tipo==='final'||paso.tipo==='fatima';
+    const sinCuentas=paso.tipo==='cruz'||paso.tipo==='pesame'||paso.tipo==='credo'||paso.tipo==='misterio'||paso.tipo==='final'||paso.tipo==='fatima'||paso.tipo==='intenciones';
     if(sinCuentas){
       cuentas.innerHTML='';
       cuentas.classList.remove('sellado');
@@ -293,6 +295,8 @@ function renderPasoRosario(){
     let cuerpo;
     if(paso.tipo==='misterio'){
       cuerpo='<p class="rosario-paso-texto rosario-misterio">'+paso.misterio+'</p><p class="rosario-paso-hint">Meditá este misterio y rezá un Padre Nuestro.</p>';
+    }else if(paso.tipo==='intenciones'){
+      cuerpo='<p class="rosario-paso-texto">Antes de cerrar, presentá a Dios las intenciones por las que ofrecés este Rosario: las tuyas, las de tus seres queridos, las del Papa y la Iglesia.</p><p class="rosario-paso-hint">Nombralas en silencio o en voz alta, y luego continuá con la Salve.</p>';
     }else{
       cuerpo='<p class="rosario-paso-texto">'+textoOracion(paso.oracionT).replace(/\n/g,'<br>')+'</p>';
     }
