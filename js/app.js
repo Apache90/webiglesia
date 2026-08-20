@@ -244,6 +244,7 @@ function iniciarRosario(clave,btn){
   rosarioIdx=0;
   if(btn){document.querySelectorAll('#rosarioChips .fbtn').forEach(b=>b.classList.remove('on'));btn.classList.add('on');}
   renderRosarioHoy();
+  renderRosarioCadena();
   renderPasoRosario();
   const paso=document.getElementById('rosarioPaso');
   if(paso)paso.scrollIntoView({behavior:'smooth',block:'center'});
@@ -251,6 +252,31 @@ function iniciarRosario(clave,btn){
 
 function reiniciarRosario(){rosarioIdx=0;renderPasoRosario();}
 function navRosario(delta){rosarioIdx=Math.max(0,Math.min(rosarioPasos.length-1,rosarioIdx+delta));renderPasoRosario();}
+function irAPasoRosario(i){rosarioIdx=Math.max(0,Math.min(rosarioPasos.length-1,i));renderPasoRosario();}
+
+const CADENA_CLASE={cruz:'cadena-cruz',final:'cadena-cruz',grande:'cadena-grande',chica:'cadena-chica',gloria:'cadena-gloria',fatima:'cadena-fatima',pesame:'cadena-especial',credo:'cadena-especial',misterio:'cadena-especial',intenciones:'cadena-especial'};
+function renderRosarioCadena(){
+  const el=document.getElementById('rosarioCadena');
+  if(!el)return;
+  let html='';
+  rosarioPasos.forEach((p,i)=>{
+    const gap=(p.tipo==='fatima')?' cadena-fin-decena':'';
+    html+='<button type="button" class="cadena-cuenta '+CADENA_CLASE[p.tipo]+gap+'" onclick="irAPasoRosario('+i+')" title="Paso '+(i+1)+': '+p.titulo+'" aria-label="Paso '+(i+1)+' de '+rosarioPasos.length+': '+p.titulo+'"></button>';
+  });
+  el.innerHTML=html;
+  actualizarCadenaEstado();
+}
+function actualizarCadenaEstado(){
+  const el=document.getElementById('rosarioCadena');
+  if(!el)return;
+  const cuentas=el.querySelectorAll('.cadena-cuenta');
+  cuentas.forEach((c,i)=>{
+    c.classList.toggle('completa',i<rosarioIdx);
+    c.classList.toggle('activa',i===rosarioIdx);
+  });
+  const activo=el.querySelector('.activa');
+  if(activo)activo.scrollIntoView({behavior:'smooth',block:'nearest',inline:'center'});
+}
 
 function renderPasoRosario(){
   const paso=rosarioPasos[rosarioIdx];
@@ -308,6 +334,8 @@ function renderPasoRosario(){
   const prev=document.getElementById('rosPrev'),next=document.getElementById('rosNext');
   if(prev)prev.disabled=rosarioIdx===0;
   if(next)next.disabled=rosarioIdx===rosarioPasos.length-1;
+
+  actualizarCadenaEstado();
 }
 function renderSantosGaleria(){
   const g=document.getElementById('santosGaleria');
@@ -374,7 +402,7 @@ function initScrollSpy(){
   },{root:main,rootMargin:'-35% 0px -55% 0px',threshold:0});
   secs.forEach(s=>obs.observe(s));
 }
-renderVersiculos();sc();renderHoyLiturgico();renderLiturgia();renderOraciones();renderRosarioHoy();renderRosarioChips();renderPasoRosario();renderSantosGaleria();renderSantos();renderSalmos();initScrollSpy();initPuertas();
+renderVersiculos();sc();renderHoyLiturgico();renderLiturgia();renderOraciones();renderRosarioHoy();renderRosarioChips();renderRosarioCadena();renderPasoRosario();renderSantosGaleria();renderSantos();renderSalmos();initScrollSpy();initPuertas();
 
 let resizeTimer;
 window.addEventListener('resize',()=>{
@@ -416,6 +444,7 @@ window.togO=togO;
 window.iniciarRosario=iniciarRosario;
 window.reiniciarRosario=reiniciarRosario;
 window.navRosario=navRosario;
+window.irAPasoRosario=irAPasoRosario;
 window.renderSantos=renderSantos;
 window.togM=togM;
 window.renderSalmos=renderSalmos;
