@@ -260,13 +260,13 @@ function irAPasoRosario(i){rosarioIdx=Math.max(0,Math.min(rosarioPasos.length-1,
 
 const CADENA_CLASE={cruz:'cadena-cruz',final:'cadena-especial',grande:'cadena-grande',chica:'cadena-chica',gloria:'cadena-gloria',fatima:'cadena-fatima',ofrecimiento:'cadena-especial',credo:'cadena-especial',misterio:'cadena-misterio',oracionFinal:'cadena-especial',cruzFinal:'cadena-especial'};
 function claseCuenta(p){return p.grande?'cadena-grande':CADENA_CLASE[p.tipo];}
-function cuentaHTML(grupo){
+function cuentaHTML(grupo,esEslabonCola){
   const ordenado=grupo.slice().sort((a,b)=>a.i-b.i);
   const min=ordenado[0].i,max=ordenado[ordenado.length-1].i;
   const rep=ordenado.find(p=>p.tipo==='cruz'||p.tipo==='cruzFinal')||ordenado[0];
   const titulos=ordenado.map(p=>p.titulo).join(' · ');
   const etiqueta=(min===max?'Paso '+(min+1):'Pasos '+(min+1)+'-'+(max+1))+': '+titulos;
-  const refuerzo=rep.tipo==='cruz'?' data-refuerzo="6"':'';
+  const refuerzo=(esEslabonCola&&rep.tipo!=='cruz')?' data-refuerzo="6"':'';
   return'<button type="button" class="cadena-cuenta '+claseCuenta(rep)+'" data-min="'+min+'" data-max="'+max+'"'+refuerzo+' onclick="irAPasoRosario('+min+')" title="'+etiqueta+'" aria-label="'+etiqueta+' — '+rosarioPasos.length+' pasos en total"></button>';
 }
 function agruparPorCuenta(pasos){
@@ -296,7 +296,7 @@ function renderRosarioCadena(){
   });
 
   let colaHTML='';
-  agruparPorCuenta(cola).forEach(grupo=>{colaHTML+=cuentaHTML(grupo);});
+  agruparPorCuenta(cola).forEach(grupo=>{colaHTML+=cuentaHTML(grupo,true);});
 
   el.innerHTML=
     '<div class="rosario-forma">'
