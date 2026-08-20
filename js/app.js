@@ -283,7 +283,7 @@ function renderRosarioCadena(){
   if(!el)return;
   const conIndice=rosarioPasos.map((p,i)=>Object.assign({},p,{i:i}));
   const lazo=conIndice.filter(p=>p.decada>=1&&p.decada<=5);
-  const cola=conIndice.filter(p=>p.decada===0||p.decada===6).reverse();
+  const cola=conIndice.filter(p=>p.decada===0).reverse();
 
   let lazoHTML='';
   const pasoAngulo=340/(lazo.length-1);
