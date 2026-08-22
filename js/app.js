@@ -163,7 +163,7 @@ function renderLiturgia(){
     const c=document.createElement('div');
     c.className='tc';
     const fh=t.fechas.map(f=>'<div class="fi"><div class="fd">'+f.d+'</div><div class="fn">'+f.n+'</div><div class="fnota">'+sub(f.nota)+'</div></div>').join('');
-    c.innerHTML='<div class="th" onclick="tog(this)"><span class="tdot" style="background:'+t.color+'"></span><span class="ttit">'+t.n+'</span><span class="tdesc">'+t.d+'</span><span class="tchev">▼</span></div><div class="tb"><div class="ti">'+t.i+'</div><div style="font-family:var(--font-title);font-size:11.5px;color:var(--gold);letter-spacing:2px;margin-bottom:10px;text-transform:uppercase">✦ Color litúrgico: '+t.cl+'</div><div class="fg">'+fh+'</div></div>';
+    c.innerHTML='<div class="th" onclick="tog(this)"><span class="tdot" style="background:'+t.color+'"></span><div class="tinfo"><span class="ttit">'+t.n+'</span><span class="tdesc">'+t.d+'</span></div><span class="tchev">▼</span></div><div class="tb"><div class="ti">'+t.i+'</div><div style="font-family:var(--font-title);font-size:11.5px;color:var(--gold);letter-spacing:2px;margin-bottom:10px;text-transform:uppercase">✦ Color litúrgico: '+t.cl+'</div><div class="fg">'+fh+'</div></div>';
     g.appendChild(c);
   });
 }
