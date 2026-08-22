@@ -104,8 +104,9 @@ button{font:inherit;-webkit-tap-highlight-color:transparent;-webkit-user-select:
 .oh{display:flex;align-items:center;gap:12px;padding:15px 18px;cursor:pointer;user-select:none;background:var(--surface);transition:background .15s;min-height:48px;}
 .oh:hover{background:var(--surface2);}
 .oh:active{background:var(--surface3);}
-.otit{font-family:var(--font-title);font-size:15px;font-weight:600;color:var(--gold2);flex:1;letter-spacing:1px;}
-.otype{font-size:12.5px;color:var(--text3);padding:2px 8px;border:1px solid var(--border);border-radius:var(--radius-sm);font-family:var(--font-title);letter-spacing:1px;}
+.oinfo{display:flex;flex-direction:column;gap:3px;flex:1;min-width:0;}
+.otit{font-family:var(--font-title);font-size:15px;font-weight:600;color:var(--gold2);letter-spacing:1px;}
+.otype{font-size:12.5px;color:var(--text3);font-style:italic;}
 .ochev{font-size:11.5px;color:var(--text3);transition:transform .22s;}
 .ob{display:none;padding:20px 24px;background:var(--surface2);border-top:1px solid var(--border);}
 .ob.open{display:block;}
