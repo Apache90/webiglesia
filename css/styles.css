@@ -23,9 +23,9 @@ button{font:inherit;-webkit-tap-highlight-color:transparent;-webkit-user-select:
 .sec:first-child{padding-top:0;}
 
 .tabbar{flex:0 0 auto;display:flex;justify-content:space-around;align-items:stretch;background:rgba(10,8,0,0.97);backdrop-filter:blur(12px);border-top:1px solid var(--border);padding-bottom:env(safe-area-inset-bottom);z-index:20;}
-.tabbtn{flex:1;display:flex;flex-direction:column;align-items:center;justify-content:center;gap:3px;background:none;border:none;color:var(--text3);padding:8px 2px 7px;cursor:pointer;transition:color .18s;min-height:56px;}
-.tabbtn svg{width:22px;height:22px;transition:transform .12s ease;}
-.tabbtn span{font-family:var(--font-title);font-size:10.5px;letter-spacing:.5px;text-transform:uppercase;}
+.tabbtn{flex:1;min-width:0;display:flex;flex-direction:column;align-items:center;justify-content:center;gap:3px;background:none;border:none;color:var(--text3);padding:8px 1px 7px;cursor:pointer;transition:color .18s;min-height:56px;}
+.tabbtn svg{width:21px;height:21px;flex-shrink:0;transition:transform .12s ease;}
+.tabbtn span{font-family:var(--font-title);font-size:9.5px;letter-spacing:.2px;text-transform:uppercase;max-width:100%;overflow:hidden;text-overflow:ellipsis;white-space:nowrap;}
 .tabbtn:active svg{transform:scale(.88);}
 .tabbtn.on{color:var(--gold2);}
 .tabbtn.on svg{color:var(--gold);}
@@ -96,6 +96,21 @@ button{font:inherit;-webkit-tap-highlight-color:transparent;-webkit-user-select:
 .tb{display:none;padding:16px 18px;background:var(--surface2);border-top:1px solid var(--border);}
 .tb.open{display:block;}
 .ti{font-size:var(--fs-texto);color:var(--text2);font-style:italic;line-height:1.6;margin-bottom:16px;padding-left:14px;border-left:2px solid var(--border2);}
+
+/* ===== La Santa Misa ===== */
+.ms-lista{display:flex;flex-direction:column;gap:16px;}
+.ms-paso{display:flex;gap:14px;padding-bottom:16px;border-bottom:1px solid rgba(180,140,40,0.08);}
+.ms-paso:last-child{border-bottom:none;padding-bottom:0;}
+.ms-postura{flex-shrink:0;width:78px;text-align:center;padding:6px 4px;border-radius:var(--radius-sm);font-family:var(--font-title);font-size:11px;letter-spacing:.5px;text-transform:uppercase;border:1px solid var(--border2);height:fit-content;}
+.ms-postura.ms-pie{color:var(--gold2);border-color:rgba(201,168,76,.4);background:var(--gold-dim);}
+.ms-postura.ms-sentado{color:var(--text2);border-color:var(--border2);background:var(--surface3);}
+.ms-postura.ms-rodillas{color:#e0a0a0;border-color:rgba(139,26,26,.45);background:rgba(139,26,26,.12);}
+.ms-contenido{flex:1;min-width:0;}
+.ms-nombre{font-family:var(--font-title);font-size:var(--fs-titulo);font-weight:600;color:var(--gold2);letter-spacing:.3px;margin-bottom:6px;}
+.ms-linea{font-family:var(--font-verse);font-size:var(--fs-texto);font-style:italic;color:var(--text2);line-height:1.6;margin-top:4px;}
+.ms-linea.ms-pueblo{color:var(--text);}
+.ms-quien{font-family:var(--font-title);font-style:normal;font-size:11.5px;letter-spacing:1.5px;text-transform:uppercase;color:var(--text3);margin-right:4px;}
+.ms-explicacion{font-size:var(--fs-texto);color:var(--text3);font-style:italic;line-height:1.6;margin-top:10px;}
 .fg{display:grid;grid-template-columns:repeat(auto-fill,minmax(240px,1fr));gap:8px;}
 .fi{background:var(--surface3);border:1px solid var(--border);border-radius:var(--radius-sm);padding:10px 14px;}
 .fd{font-family:var(--font-title);font-size:12.5px;color:var(--gold);letter-spacing:1px;margin-bottom:3px;}

@@ -258,3 +258,54 @@ const SALMOS=[
   {num:'Salmo 27',t:'El Señor es mi luz',s:'Para momentos de miedo y búsqueda de fortaleza',tx:'El Señor es mi luz y mi salvación,\n¿a quién temeré?\nEl Señor es el baluarte de mi vida,\n¿ante quién temblaré?\n\nUna sola cosa he pedido al Señor,\ny esto es lo que quiero:\nvivir en la Casa del Señor\ntodos los días de mi vida,\npara gozar de la dulzura del Señor\ny contemplar su Templo.\n\nMi corazón sabe que dijiste: "Busquen mi rostro".\nYo busco tu rostro, Señor, no lo apartes de mí.\n\nYo creo que contemplaré la bondad del Señor\nen la tierra de los vivientes.\nEspera en el Señor y sé fuerte;\nten valor y espera en el Señor.'},
   {num:'Salmo 103',t:'Bendice, alma mía, al Señor',s:'Para dar gracias y alabar la misericordia divina',tx:'Bendice al Señor, alma mía,\nque todo mi ser bendiga a su santo Nombre;\nbendice al Señor, alma mía,\ny nunca olvides sus beneficios.\n\nÉl perdona todas tus culpas\ny cura todas tus dolencias;\nrescata tu vida del sepulcro,\nte corona de amor y de ternura;\nél colma tu vida de bienes,\ny tu juventud se renueva como el águila.\n\nEl Señor es bondadoso y compasivo,\nlento para enojarse y de gran misericordia;\nno nos trata según nuestros pecados\nni nos paga conforme a nuestras culpas.\n\nCuanto se alza el cielo sobre la tierra,\nasí de inmenso es su amor por los que lo temen.\nComo la ternura de un padre con sus hijos\nes la ternura del Señor con los que le temen.'},
 ];
+
+/* ===============================================================
+ * LA SANTA MISA — guía de postura y respuesta
+ * Estructura de la Misa según el Ordinario Romano (Novus Ordo),
+ * como se celebra habitualmente en las parroquias de habla hispana.
+ * p: postura ('pie' | 'sentado' | 'rodillas')
+ * =============================================================== */
+const MISA=[
+  {id:'inicio',n:'Ritos Iniciales',color:'#4a7a4a',resumen:'Nos reunimos como pueblo de Dios y nos disponemos a celebrar.',pasos:[
+    {p:'pie',n:'Canto y procesión de entrada',x:'El sacerdote y los ministros se acercan al altar mientras la asamblea canta, reunida ya como un solo cuerpo.'},
+    {p:'pie',n:'Saludo inicial',sac:'En el nombre del Padre, y del Hijo, y del Espíritu Santo.',pue:'Amén.',x:'Nos signamos con la Cruz: todo lo que sigue se hace en el nombre de la Trinidad.',sac2:'El Señor esté con ustedes.',pue2:'Y con tu espíritu.'},
+    {p:'pie',n:'Acto penitencial',sac:'Reconozcamos nuestros pecados para celebrar dignamente estos sagrados misterios.',pue:'Yo confieso ante Dios todopoderoso y ante ustedes, hermanos, que he pecado mucho... Señor, ten piedad. Cristo, ten piedad. Señor, ten piedad.',x:'Antes de escuchar la Palabra y recibir la Eucaristía, reconocemos con humildad que somos pecadores necesitados de misericordia.'},
+    {p:'pie',n:'Gloria',pue:'Gloria a Dios en el cielo, y en la tierra paz a los hombres que ama el Señor...',x:'Himno antiquísimo de alabanza. Se omite en Adviento y Cuaresma, tiempos de preparación y sobriedad.'},
+    {p:'pie',n:'Oración colecta',sac:'Oremos...',pue:'Amén.',x:'El sacerdote "recoge" en una sola oración las intenciones silenciosas de todos los presentes.'},
+  ]},
+  {id:'palabra',n:'Liturgia de la Palabra',color:'#4a5c8c',resumen:'Dios mismo nos habla a través de la Escritura proclamada.',pasos:[
+    {p:'sentado',n:'Primera lectura',pue:'Te alabamos, Señor.',x:'Habitualmente del Antiguo Testamento (en Pascua, de los Hechos de los Apóstoles). Nos sentamos para escuchar, como quien recibe una enseñanza.'},
+    {p:'sentado',n:'Salmo responsorial',x:'Es la respuesta orante a la Palabra que acabamos de escuchar, casi siempre cantada con un estribillo que repite la asamblea.'},
+    {p:'sentado',n:'Segunda lectura',pue:'Te alabamos, Señor.',x:'De las cartas apostólicas. Se proclama los domingos y solemnidades.'},
+    {p:'pie',n:'Aclamación antes del Evangelio (Aleluya)',x:'Nos ponemos de pie para recibir a Cristo, que va a hablarnos directamente en el Evangelio. En Cuaresma se canta otra aclamación, sin "Aleluya".'},
+    {p:'pie',n:'Evangelio',sac:'Lectura del santo Evangelio según san...',pue:'Gloria a ti, Señor.',x:'Nos signamos con una pequeña cruz en la frente, los labios y el pecho: que la Palabra ilumine mi mente, esté en mi boca y habite en mi corazón.',sac2:'Palabra del Señor.',pue2:'Gloria a ti, Señor Jesús.'},
+    {p:'sentado',n:'Homilía',x:'El sacerdote explica y actualiza la Palabra proclamada para la vida concreta de la comunidad.'},
+    {p:'pie',n:'Credo',pue:'Creo en un solo Dios, Padre todopoderoso...',x:'Profesamos juntos la fe de la Iglesia. Es costumbre inclinarse levemente al decir "por obra del Espíritu Santo se encarnó de María, la Virgen, y se hizo hombre".'},
+    {p:'pie',n:'Oración universal (de los fieles)',pue:'Te lo pedimos, Señor. (u otra invocación similar)',x:'Presentamos a Dios las necesidades de la Iglesia, del mundo, de los que sufren y de la comunidad local.'},
+  ]},
+  {id:'eucaristica',n:'Liturgia Eucarística',color:'#8b1a1a',resumen:'El corazón de la Misa: el pan y el vino se convierten en el Cuerpo y la Sangre de Cristo.',pasos:[
+    {p:'sentado',n:'Presentación de las ofrendas',sac:'Bendito seas, Señor, Dios del universo, por este pan / vino que recibimos de tu generosidad...',pue:'Bendito seas por siempre, Señor.',x:'Se lleva al altar el pan y el vino, fruto del trabajo humano, que serán transformados. A veces se presentan también las limosnas para los pobres.'},
+    {p:'pie',n:'Oren, hermanos',sac:'Oren, hermanos, para que este sacrificio, mío y de ustedes, sea agradable a Dios, Padre todopoderoso.',pue:'El Señor reciba de tus manos este sacrificio, para alabanza y gloria de su Nombre, para nuestro bien y el de toda su santa Iglesia.',x:'Última invitación antes de entrar en el corazón de la Plegaria Eucarística.'},
+    {p:'pie',n:'Prefacio',sac:'El Señor esté con ustedes. / Levantemos el corazón. / Demos gracias al Señor, nuestro Dios.',pue:'Y con tu espíritu. / Lo tenemos levantado hacia el Señor. / Es justo y necesario.',x:'Comienza la gran Plegaria Eucarística dando gracias a Dios por un motivo propio del día o del tiempo litúrgico.'},
+    {p:'pie',n:'Santo, Santo, Santo',pue:'Santo, Santo, Santo es el Señor, Dios del universo. Llenos están el cielo y la tierra de tu gloria. Hosanna en el cielo...',x:'Nos unimos al canto eterno de los ángeles. Al terminar, la asamblea se arrodilla para lo más sagrado de la Misa.'},
+    {p:'rodillas',n:'Epíclesis',x:'El sacerdote extiende las manos sobre el pan y el vino invocando al Espíritu Santo, para que los transforme en el Cuerpo y la Sangre de Cristo.'},
+    {p:'rodillas',n:'Consagración',sac:'Esto es mi Cuerpo, que será entregado por ustedes... Este es el cáliz de mi Sangre...',x:'El momento central de toda la Misa. Se eleva la Hostia y luego el Cáliz: es Jesucristo mismo, real y verdaderamente presente. Suena una campanilla en muchas parroquias para señalar el instante.'},
+    {p:'rodillas',n:'Aclamación memorial',pue:'Anunciamos tu muerte, proclamamos tu resurrección. ¡Ven, Señor Jesús! (u otra de las fórmulas)',x:'Respondemos ante el misterio que se acaba de realizar sobre el altar.'},
+    {p:'rodillas',n:'Doxología final',sac:'Por Cristo, con Él y en Él, a ti, Dios Padre omnipotente, en la unidad del Espíritu Santo, todo honor y toda gloria por los siglos de los siglos.',pue:'Amén.',x:'Conocido como el "Gran Amén": el sacerdote eleva juntos la Hostia y el Cáliz y toda la Plegaria Eucarística culmina en esta aclamación.'},
+  ]},
+  {id:'comunion',n:'Rito de la Comunión',color:'#c9a84c',resumen:'Nos preparamos para recibir al Señor y nos unimos a Él en la Eucaristía.',pasos:[
+    {p:'pie',n:'Padre Nuestro',pue:'Padre nuestro, que estás en el cielo...',x:'Nos ponemos de pie para pedir, como hijos, el pan de cada día — el pan material y el Pan eucarístico.'},
+    {p:'pie',n:'Rito de la paz',sac:'La paz del Señor esté siempre con ustedes.',pue:'Y con tu espíritu.',x:'Nos deseamos la paz de Cristo antes de acercarnos juntos a comulgar, como signo de comunión fraterna.'},
+    {p:'pie',n:'Fracción del pan — Cordero de Dios',pue:'Cordero de Dios, que quitas el pecado del mundo, ten piedad de nosotros... danos la paz.',x:'El sacerdote parte la Hostia, recordando que Cristo se entregó "partido" por todos.'},
+    {p:'pie',n:'"Este es el Cordero de Dios"',sac:'Este es el Cordero de Dios, que quita el pecado del mundo. Dichosos los invitados a la cena del Señor.',pue:'Señor, no soy digno de que entres en mi casa, pero una palabra tuya bastará para sanarme.',x:'Reconocemos, como el centurión del Evangelio, que nadie es digno por sí mismo de recibir a Dios — y aun así, Él viene.'},
+    {p:'pie',n:'Comunión',x:'Se recibe la Hostia de pie (o de rodillas, según la costumbre local), respondiendo "Amén" a las palabras "El Cuerpo de Cristo" — nuestro "sí" personal a esa fe.'},
+    {p:'sentado',n:'Silencio de acción de gracias',x:'Momento breve para agradecer en el corazón, ya con Cristo recibido, antes de que la Misa continúe.'},
+    {p:'pie',n:'Oración después de la comunión',sac:'Oremos...',pue:'Amén.',x:'El sacerdote cierra este momento con una oración que pide que el fruto de la Comunión permanezca en nuestra vida.'},
+  ]},
+  {id:'conclusion',n:'Rito de Conclusión',color:'#6b3a6b',resumen:'Somos enviados a vivir y anunciar lo que hemos celebrado.',pasos:[
+    {p:'pie',n:'Avisos parroquiales',x:'Espacio breve, si hace falta, para comunicar a la comunidad.'},
+    {p:'pie',n:'Bendición final',sac:'El Señor esté con ustedes. / La bendición de Dios todopoderoso, Padre, Hijo (✝) y Espíritu Santo, descienda sobre ustedes.',pue:'Y con tu espíritu. / Amén.',x:'Nos signamos una última vez, llevando esa bendición a la semana que empieza.'},
+    {p:'pie',n:'Despedida',sac:'Pueden ir en paz.',pue:'Demos gracias a Dios.',x:'La palabra "Misa" viene justamente de esta despedida latina ("Ite, missa est"): somos enviados en misión.'},
+    {p:'pie',n:'Canto y procesión de salida',x:'La celebración termina, pero la vida cristiana —vivir lo celebrado— recién empieza.'},
+  ]},
+];

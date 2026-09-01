@@ -171,6 +171,33 @@ function tog(h){const b=h.nextElementSibling;const ch=h.querySelector('.tchev');
 function renderOraciones(){const g=document.getElementById('og');ORACIONES.forEach(o=>{const c=document.createElement('div');c.className='oc';c.innerHTML='<div class="oh" onclick="togO(this)"><span style="color:var(--gold);font-size:16px">✝</span><div class="oinfo"><span class="otit">'+o.t+'</span><span class="otype">'+o.tp+'</span></div><span class="ochev">▼</span></div><div class="ob"><div class="otxt">'+o.tx+'</div><div class="oorig">— '+o.o+'</div></div>';g.appendChild(c);});}
 function togO(h){const b=h.nextElementSibling;const ch=h.querySelector('.ochev');b.classList.toggle('open');ch.style.transform=b.classList.contains('open')?'rotate(180deg)':'';}
 
+/* ---------- La Santa Misa ---------- */
+const POSTURA_LABEL={pie:'De pie',sentado:'Sentados',rodillas:'De rodillas'};
+function pasoMisaHTML(p){
+  const dialogo1=p.sac?'<div class="ms-linea"><span class="ms-quien">Sacerdote:</span> "'+p.sac+'"</div>':'';
+  const dialogo1b=p.pue?'<div class="ms-linea ms-pueblo"><span class="ms-quien">Pueblo:</span> "'+p.pue+'"</div>':'';
+  const dialogo2=p.sac2?'<div class="ms-linea"><span class="ms-quien">Sacerdote:</span> "'+p.sac2+'"</div>':'';
+  const dialogo2b=p.pue2?'<div class="ms-linea ms-pueblo"><span class="ms-quien">Pueblo:</span> "'+p.pue2+'"</div>':'';
+  return '<div class="ms-paso">'
+    +'<div class="ms-postura ms-'+p.p+'">'+POSTURA_LABEL[p.p]+'</div>'
+    +'<div class="ms-contenido">'
+    +'<div class="ms-nombre">'+p.n+'</div>'
+    +dialogo1+dialogo1b+dialogo2+dialogo2b
+    +'<p class="ms-explicacion">'+p.x+'</p>'
+    +'</div></div>';
+}
+function renderMisa(){
+  const g=document.getElementById('msg');
+  if(!g)return;
+  MISA.forEach((parte,i)=>{
+    const c=document.createElement('div');
+    c.className='tc';
+    const pasos=parte.pasos.map(pasoMisaHTML).join('');
+    c.innerHTML='<div class="th" onclick="tog(this)"><span class="tdot" style="background:'+parte.color+'"></span><div class="tinfo"><span class="ttit">'+(i+1)+'. '+parte.n+'</span><span class="tdesc">'+parte.resumen+'</span></div><span class="tchev">▼</span></div><div class="tb"><div class="ms-lista">'+pasos+'</div></div>';
+    g.appendChild(c);
+  });
+}
+
 /* ---------- El Rosario ---------- */
 const NUMEROS_ORDINALES=['1er','2°','3er','4°','5°'];
 
@@ -471,7 +498,7 @@ function initScrollSpy(){
   },{root:main,rootMargin:'-35% 0px -55% 0px',threshold:0});
   secs.forEach(s=>obs.observe(s));
 }
-renderVersiculos();sc();renderHoyLiturgico();renderLiturgia();renderOraciones();renderRosarioHoy();renderRosarioChips();renderRosarioCadena();renderPasoRosario();renderSantosGaleria();renderSantos();renderSalmos();initScrollSpy();initPuertas();
+renderVersiculos();sc();renderHoyLiturgico();renderLiturgia();renderMisa();renderOraciones();renderRosarioHoy();renderRosarioChips();renderRosarioCadena();renderPasoRosario();renderSantosGaleria();renderSantos();renderSalmos();initScrollSpy();initPuertas();
 
 let resizeTimer;
 window.addEventListener('resize',()=>{
@@ -507,6 +534,7 @@ window.flip=flip;
 window.nav=nav;
 window.shu=shu;
 window.renderLiturgia=renderLiturgia;
+window.renderMisa=renderMisa;
 window.tog=tog;
 window.renderOraciones=renderOraciones;
 window.togO=togO;

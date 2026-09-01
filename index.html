@@ -25,7 +25,7 @@
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0, viewport-fit=cover">
-<title>Biblia Católica — Guía Espiritual · Emir Segovia</title>
+<title>Guía Espiritual</title>
 <meta name="description" content="Año litúrgico, oraciones, santos, salmos, versículos y meditación diaria de la tradición católica.">
 <meta name="theme-color" content="#0a0800">
 <meta name="mobile-web-app-capable" content="yes">
@@ -139,6 +139,21 @@
   </div>
 </div>
 
+<div class="sec" id="mi">
+  <div class="sec-head" onclick="togSec(this)">
+    <div class="sec-title-row"><span class="sec-title">La Santa Misa</span><span class="sec-chev">▼</span></div>
+    <div class="sec-desc">Guía completa, paso a paso, de todo lo que sucede en la Misa — cuándo pararse, sentarse o arrodillarse, y qué responder en cada momento.</div>
+  </div>
+  <div class="sec-body">
+    <div class="intro-card">
+      <div class="intro-card-eyebrow">Lumen Gentium · 11</div>
+      <p class="intro-card-verse">"La Eucaristía es fuente y culmen de toda la vida cristiana."</p>
+    </div>
+    <p class="subsec-desc">Recorré la Misa momento a momento. Tocá cada parte para ver qué se hace, qué postura corresponde, y qué se dice.</p>
+    <div id="msg"></div>
+  </div>
+</div>
+
 <div class="sec" id="or">
   <div class="sec-head" onclick="togSec(this)">
     <div class="sec-title-row"><span class="sec-title">Oraciones</span><span class="sec-chev">▼</span></div>
@@ -240,7 +255,7 @@
   </div>
 </div>
 
-<div class="footer">✝ &nbsp; Hecho para la comunidad por &nbsp; <span>Emir Segovia</span> &nbsp; ✝</div>
+<div class="footer">✝ &nbsp; Hecho para la comunidad por &nbsp; <span>E.S.</span> &nbsp; ✝</div>
 <div class="footer-source">Citas bíblicas revisadas según <a href="https://www.vatican.va/content/bibbia/es.html" target="_blank" rel="noopener">la Biblia en el sitio oficial de la Santa Sede</a> (El Libro del Pueblo de Dios).</div>
 
 </main>
@@ -249,6 +264,10 @@
   <button class="tabbtn on" data-screen="li" onclick="goTo('li')">
     <svg viewBox="0 0 24 24" aria-hidden="true"><rect x="3.5" y="4.5" width="17" height="16" rx="2" fill="none" stroke="currentColor" stroke-width="1.6"/><path d="M3.5 9h17M8 3v3M16 3v3" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round"/></svg>
     <span>Liturgia</span>
+  </button>
+  <button class="tabbtn" data-screen="mi" onclick="goTo('mi')">
+    <svg viewBox="0 0 24 24" aria-hidden="true"><path d="M7 3.5h10M8 3.5c0 5.2 1.2 8.5 4 8.5s4-3.3 4-8.5M12 12v7M8 19.5h8" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round"/></svg>
+    <span>La Misa</span>
   </button>
   <button class="tabbtn" data-screen="or" onclick="goTo('or')">
     <svg viewBox="0 0 24 24" aria-hidden="true"><path d="M12 3v18M7 7l5-4 5 4" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round"/><path d="M6 12c0 4 2.5 7 6 8 3.5-1 6-4 6-8" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round"/></svg>
